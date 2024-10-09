@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+//import './App.css';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+//pages
+import Accueil from './pages/user/Accueil'
+import Reservations from './pages/user/Reservations';
+import Menus from './pages/user/Menus';
+import Login from './pages/admin/Login';
+import Dashboard from './pages/admin/Dashboard';
 
 function App() {
+
+  const isAdminRoute = useSelector((state) => state.auth.isAdminRoute);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter basename='/'>
+        
+        <Routes>
+          <Route path='/' element={<Accueil/>}/>
+          <Route path='/menus' element={<Menus />}/>
+          <Route path='/reservations' element={<Reservations />}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
+        </Routes>
+
+      </BrowserRouter>
+        
     </div>
   );
 }
