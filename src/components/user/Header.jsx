@@ -34,7 +34,6 @@ function Header(){
                     <ul>
                         <li><a href="/" >Home<br /></a></li>
                         <li><a href="/menus">Menu</a></li>
-                        <li><a href="#contact">Contact</a></li>
                     </ul>
                     <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
                     </nav>

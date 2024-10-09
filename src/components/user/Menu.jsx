@@ -38,7 +38,7 @@ function Menu(){
      
         <div className="container section-title" data-aos="fade-up">
           <h2>Menu</h2>
-          <p>gjllik hjk; gxfgc hkk</p>
+          <p>Lite des differents plat du menu</p>
         </div>
   
         <div className="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
