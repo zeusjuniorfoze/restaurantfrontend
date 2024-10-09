@@ -1,3 +1,4 @@
+import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import React, { useEffect } from 'react';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
@@ -27,7 +28,7 @@ function Main(){
                         <p data-aos="fade-up" data-aos-delay="200">Donne du bon depuis 18 ans!</p>
                         <div className="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
                         <a href="/menus" className="cta-btn">Menu</a>
-                        <a href="/reservations" className="cta-btn">Reserver une Table</a>
+                        <Link to='/reservations' className="cta-btn">Reserver une Table</Link>
                         </div>
                     </div>
                     
