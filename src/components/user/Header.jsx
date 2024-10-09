@@ -10,6 +10,7 @@ function Header() {
 
   return (
     <header id="header" className="header fixed-top">
+      {/* Topbar section */}
       <div className="topbar d-flex align-items-center">
         <div className="container d-flex justify-content-center justify-content-md-between">
           <div className="contact-info d-flex align-items-center">
@@ -29,13 +30,15 @@ function Header() {
         </div>
       </div>
 
+      {/* Branding section */}
       <div className="branding d-flex align-items-center">
         <div className="container position-relative d-flex align-items-center justify-content-between">
-          <a href="index.html" className="logo d-flex align-items-center me-auto me-xl-0">
+          <a href="/" className="logo d-flex align-items-center me-auto me-xl-0">
             <img src="assets/img/logo.png" alt="" />
             <h1 className="sitename">RestaurantPS</h1>
           </a>
 
+          {/* Navigation menu */}
           <nav id="navmenu" className={`navmenu ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
             <ul>
               <li><Link to='/'>Home</Link></li>
@@ -43,9 +46,14 @@ function Header() {
             </ul>
           </nav>
 
-          <button className="mobile-nav-toggle d-xl-none bi bi-list" onClick={toggleMobileMenu}></button>
+          {/* Mobile menu toggle button */}
+          <button
+            className="mobile-nav-toggle d-xl-none bi bi-list"
+            onClick={toggleMobileMenu}
+          ></button>
 
-          <Link to='/reservations' className="btn-book-a-table d-none d-xl-block">Reserver une Table</Link>
+          {/* Button visible only on large screens */}
+          <Link to='/reservations' className="btn-book-a-table d-none d-xl-block">Réserver une Table</Link>
         </div>
       </div>
     </header>
