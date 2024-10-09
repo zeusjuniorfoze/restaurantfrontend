@@ -33,8 +33,8 @@ function Header(){
 
                     <nav id="navmenu" className="navmenu">
                     <ul>
-                        <li><a href="/" >Home<br /></a></li>
-                        <li><a href="/menus">Menu</a></li>
+                        <li><Link to='/'>Home<br /></Link></li>
+                        <li><Link to='/menus'>Menus</Link></li>
                     </ul>
                     <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
                     </nav>
