@@ -38,7 +38,6 @@ function Header(){
                     </ul>
                     <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
                     </nav>
-
                     <Link to='/reservations' className="btn-book-a-table d-none d-xl-block">Reserver une Table</Link>
                 </div>
 
@@ -51,4 +50,3 @@ function Header(){
 }
 
 export default Header;
-
