@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import Reservation from "../../components/user/Reservation";
 import Footer from "../../components/user/Footer";
 import Header from "../../components/user/Header";
@@ -19,7 +20,7 @@ function Reservations(){
                 <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam molestias.</p>
                 <nav className="breadcrumbs">
                 <ol>
-                    <li><a href="/">Home</a></li>
+                    <li><Link to='/' >Home</Link></li>
                     <li className="current">Reservations</li>
                 </ol>
                 </nav>

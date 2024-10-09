@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import Menu from "../../components/user/Menu";
 import Header from "../../components/user/Header";
 import Footer from "../../components/user/Footer";
@@ -20,7 +21,7 @@ function Menus(){
                 <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam molestias.</p>
                 <nav className="breadcrumbs">
                 <ol>
-                    <li><a href="/">Home</a></li>
+                    <li><Link to='/' >Home</Link></li>
                     <li className="current">Menus</li>
                 </ol>
                 </nav>
