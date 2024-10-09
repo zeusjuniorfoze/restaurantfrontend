@@ -26,8 +26,8 @@ function Main(){
                         <h2 data-aos="fade-up" data-aos-delay="100">Bienvenue au <span>RestaurantPS</span></h2>
                         <p data-aos="fade-up" data-aos-delay="200">Donne du bon depuis 18 ans!</p>
                         <div className="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-                        <a href="#menu" className="cta-btn">Menu</a>
-                        <a href="#book-a-table" className="cta-btn">Reserver une Table</a>
+                        <a href="/menus" className="cta-btn">Menu</a>
+                        <a href="/reservations" className="cta-btn">Reserver une Table</a>
                         </div>
                     </div>
                     
