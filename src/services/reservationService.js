@@ -15,6 +15,7 @@ class Reservation{
 
     }
 
+
 }
 
 export default new Reservation();
