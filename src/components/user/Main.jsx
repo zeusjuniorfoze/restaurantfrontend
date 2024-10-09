@@ -30,9 +30,7 @@ function Main(){
                         <a href="#book-a-table" className="cta-btn">Reserver une Table</a>
                         </div>
                     </div>
-                    <div className="col-lg-4 d-flex align-items-center justify-content-center mt-5 mt-lg-0">
-                        <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
-                    </div>
+                    
                     </div>
                 </div>
 
