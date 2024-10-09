@@ -14,7 +14,7 @@ function App() {
   const isAdminRoute = useSelector((state) => state.auth.isAdminRoute);
 
   return (
-    <div className="App">
+    <div className="App" >
       <BrowserRouter basename='/'>
         
         <Routes>

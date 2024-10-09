@@ -1759,32 +1759,7 @@ section,
   /* Add your styles here */
 }
 
-.navmenu.mobile-menu-open {
-  display: block;
-  position: absolute;
-  top: 60px; /* Ajuste cette valeur selon la hauteur de ton header */
-  right: 0;
-  background-color: #fff;
-  width: 100%;
-  text-align: center;
-  z-index: 999;
-}
 
-.mobile-nav-toggle {
-  font-size: 24px;
-  cursor: pointer;
-}
+/*  */
 
-@media (max-width: 991px) {
-  .btn-book-a-table {
-    display: none;
-  }
 
-  .navmenu {
-    display: none;
-  }
-
-  .navmenu.mobile-menu-open {
-    display: block;
-  }
-}
