@@ -4,13 +4,13 @@ import menuService from "../../services/menuService";
 
 function Menu(){
 
-      const [menus, setMenus] = useState({ data: [] }); // Initialiser menus avec un objet contenant un tableau vide
+      const [menus, setMenus] = useState({ data: [] }); 
 
       const fetchMenus = async () => {
         try {
           const response = await menuService.getMenu();
-          console.log(response.data); // Vérifier les données retournées par l'API
-          setMenus(response.data || { data: [] }); // En cas d'absence de données, assurer que menus.data est un tableau
+          console.log(response.data); 
+          setMenus(response.data); 
         } catch (error) {
           console.error("Erreur lors de la récupération des menus:", error);
         }
