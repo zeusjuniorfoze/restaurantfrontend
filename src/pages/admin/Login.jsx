@@ -1,97 +1,136 @@
-import React,{ useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import UsersService from '../../services/usersService';
 
-
-
-function Login(){
-
+function Login() {
+  const [emailUser, setEmail] = useState('');
+  const [passwordUser, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();  // Utilisation de useNavigate pour la redirection
 
   useEffect(() => {
-      // On signale à Redux que l'on est sur la route admin
-      dispatch({ type: 'SET_ADMIN_ROUTE', payload: true });
-  
-      return () => {
-        // Quand on quitte la route admin, on remet l'état à false
-        dispatch({ type: 'SET_ADMIN_ROUTE', payload: false });
-      };
-    }, [dispatch]);
+    const checkToken = async () => {
+      try {
+        const response = await UsersService.verifyToken();
+        if (response.valid) { 
+          navigate('/dashboard');
+        }
+      } catch (error) {
+        console.error("Erreur de vérification du token", error);
+        navigate('/login');
+      }
+    };
 
-    return(
+    checkToken();
+  }, [navigate]);
 
-        <main>
-        <div className="">
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     
-          <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-            <div className="">
-              <div className="row justify-content-center">
-                <div className="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-    
-                  <div className="d-flex justify-content-center py-4">
-                    <a href="index.html" className="logo d-flex align-items-center w-auto">
-                      <img src="assetsDashboard/img/logo.png" alt="" />
-                      <span className="d-none d-lg-block">NiceAdmin</span>
-                    </a>
-                  </div>
-    
-                  <div className="card mb-3">
-    
-                    <div className="card-body">
-    
-                      <div className="pt-4 pb-2">
-                        <h5 className="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                        <p className="text-center small">Enter your username & password to login</p>
-                      </div>
-    
-                      <form className="row g-3 needs-validation" novalidate>
-    
-                        <div className="col-12">
-                          <label for="yourUsername" className="form-label">Username</label>
-                          <div className="input-group has-validation">
-                            <span className="input-group-text" id="inputGroupPrepend">@</span>
-                            <input type="text" name="username" className="form-control" id="yourUsername" required />
-                            <div className="invalid-feedback">Please enter your username.</div>
-                          </div>
-                        </div>
-    
-                        <div className="col-12">
-                          <label for="yourPassword" className="form-label">Password</label>
-                          <input type="password" name="password" className="form-control" id="yourPassword" required />
-                          <div className="invalid-feedback">Please enter your password!</div>
-                        </div>
-    
-                        <div className="col-12">
-                          <div className="form-check">
-                            <input className="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe" />
-                            <label className="form-check-label" for="rememberMe">Remember me</label>
-                          </div>
-                        </div>
-                        <div className="col-12">
-                          <button className="btn btn-primary w-100" type="submit">Login</button>
-                        </div>
-                        <div className="col-12">
-                          <p className="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
-                        </div>
-                      </form>
-    
-                    </div>
-                  </div>
-    
-                  <div className="credits">
-                    Designed by <a href="#">Powerks-soft</a>
-                  </div>
-    
+    const formData = {
+      emailUser: emailUser.trim(),
+      passwordUser: passwordUser.trim()
+    };
+
+    try {
+      const response = await UsersService.login(formData);  
+      if (response.data.success === true && response.data.role === 'admin') {  
+        setMessage('Connexion réussie, redirection vers le dashboard...');
+
+        // Enregistre le token dans le localStorage
+        localStorage.setItem('token', response.data.token);
+        const userRole = response.data.role;
+
+        // Dispatch l'authentification réussie
+        dispatch({ type: 'LOGIN_SUCCESS', payload: { role: userRole } });
+
+        // Redirige vers le dashboard
+        navigate('/dashboard');
+      } else {
+        setMessage('Erreur de connexion : Vérifiez vos informations.');
+      }
+    } catch (error) {
+      setMessage('Erreur lors de la connexion');
+    }
+
+    // Réinitialise le formulaire après 3 secondes
+    setTimeout(() => {
+      setMessage('');
+    }, 3000);
+  };
+
+  useEffect(() => {
+    dispatch({ type: 'SET_ADMIN_ROUTE', payload: true });
+
+    return () => {
+      dispatch({ type: 'SET_ADMIN_ROUTE', payload: false });
+    };
+  }, [dispatch]);
+
+  return (
+    <main>
+      <div className="">
+        <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+          <div className="">
+            <div className="row justify-content-center">
+              <div className="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                <div className="d-flex justify-content-center py-4">
+                  <a href="index.html" className="logo d-flex align-items-center w-auto">
+                    <img src="assetsDashboard/img/logo.png" alt="" />
+                    <span className="d-none d-lg-block">RestaurantPS</span>
+                  </a>
                 </div>
+
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <div className="pt-4 pb-2">
+                      <h5 className="card-title text-center pb-0 fs-4">Login</h5>
+                      <p className="text-center small">Entrez votre email & mot de passe pour vous connecter</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="row g-3 needs-validation" novalidate>
+                      <div className="col-12">
+                        <label for="yourUsername" className="form-label">Email</label>
+                        <div className="input-group has-validation">
+                          <input type="text" name="emailUser" className="form-control" id="emailUser" 
+                            required onChange={event => setEmail(event.target.value)} />
+                          <div className="invalid-feedback">{message}.</div>
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <label for="yourPassword" className="form-label">Password</label>
+                        <input type="password" name="passwordUser" className="form-control" id="passwordUser" 
+                          required onChange={event => setPassword(event.target.value)} />
+                        <div className="invalid-feedback">{message}!</div>
+                      </div>
+
+                      <div className="col-12">
+                        <button className="btn btn-primary w-100">Login</button>
+                      </div>
+                      <div className="sent-message"><p>{message}</p></div>
+                      <div className="col-12">
+                        <p className="small mb-0">Connecter vous pour ou <Link to="/">Rentrez à l'accueil</Link></p>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+
+                <div className="credits">
+                  Designed by <a href="#">Powerks-soft</a>
+                </div>
+
               </div>
             </div>
-    
-          </section>
-    
-        </div>
-      </main>
-    
-    );
-
+          </div>
+        </section>
+      </div>
+    </main>
+  );
 }
 
 export default Login;
