@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const url = "http://localhost:8080/api";
+//const url = "http://localhost:8080/api";
+const url = "https://restaurantbackend-flax.vercel.app/api";
 class Reservation{
 
     create(formDate){
