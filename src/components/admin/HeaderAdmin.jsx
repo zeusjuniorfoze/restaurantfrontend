@@ -5,7 +5,7 @@ function HeaderAdmin(){
 
     return(
 
-        <header id="header" className="headers fixed-top d-flex align-items-center">
+        <header id="headers" className="headers fixed-top d-flex align-items-center">
 
         <div className="d-flex align-items-center justify-content-between">
           <a href="index.html" className="logo d-flex align-items-center">

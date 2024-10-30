@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {useNavigate, Navigate,BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // pages
 import Accueil from './pages/user/Accueil';
@@ -6,6 +6,10 @@ import Reservations from './pages/user/Reservations';
 import Menus from './pages/user/Menus';
 import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
+
+import MenusAdmin from './components/admin/Menus';
+import ReservationAdmin from './components/admin/ReservationAdmin';
+import DashboardAdmin from './components/admin/DashboardAdmin';
 import PrivateRoute from './reducers/PrivateRoute'; 
 
 function App() {
@@ -20,7 +24,13 @@ function App() {
           <Route path='/reservations' element={<Reservations />} />
           <Route path='/login' element={<Login />} />
           {/* Route protégée pour le tableau de bord */}
-          <Route path='/dashboard' element={<Dashboard />}/>
+          <Route path='/dashboard/*' element={<Dashboard />}/>
+
+          <Route path="/dashboard" element={<Navigate to="/dashboard/dash" />} /> 
+          <Route path="/dashboard/dash" element={<DashboardAdmin />} />
+          <Route path="/dashboard/menus" element={<MenusAdmin />} />
+          <Route path="/dashboard/reservation" element={<ReservationAdmin />} />
+    
         </Routes>
       </BrowserRouter>
     </div>

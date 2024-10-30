@@ -7,8 +7,9 @@ function Login() {
   const [emailUser, setEmail] = useState('');
   const [passwordUser, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // État de chargement initialisé à "true" pour vérifier le token au chargement
   const dispatch = useDispatch();
-  const navigate = useNavigate();  // Utilisation de useNavigate pour la redirection
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkToken = async () => {
@@ -16,10 +17,12 @@ function Login() {
         const response = await UsersService.verifyToken();
         if (response.valid) { 
           navigate('/dashboard');
+        } else {
+          setIsLoading(false); // Désactive le chargement si le token n'est pas valide
         }
       } catch (error) {
         console.error("Erreur de vérification du token", error);
-        navigate('/login');
+        setIsLoading(false); // Désactive le chargement en cas d'erreur
       }
     };
 
@@ -28,7 +31,8 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+    setIsLoading(true); // Active le chargement pour la soumission
+
     const formData = {
       emailUser: emailUser.trim(),
       passwordUser: passwordUser.trim()
@@ -39,23 +43,20 @@ function Login() {
       if (response.data.success === true && response.data.role === 'admin') {  
         setMessage('Connexion réussie, redirection vers le dashboard...');
 
-        // Enregistre le token dans le localStorage
         localStorage.setItem('token', response.data.token);
         const userRole = response.data.role;
 
-        // Dispatch l'authentification réussie
         dispatch({ type: 'LOGIN_SUCCESS', payload: { role: userRole } });
-
-        // Redirige vers le dashboard
         navigate('/dashboard');
       } else {
         setMessage('Erreur de connexion : Vérifiez vos informations.');
       }
     } catch (error) {
       setMessage('Erreur lors de la connexion');
+    } finally {
+      setIsLoading(false); // Désactive le chargement
     }
 
-    // Réinitialise le formulaire après 3 secondes
     setTimeout(() => {
       setMessage('');
     }, 3000);
@@ -70,10 +71,10 @@ function Login() {
   }, [dispatch]);
 
   return (
-    <main>
-      <div className="">
+    <main id="arriereplan" className="arriereplan">
+      <div className="arriereplan" id="arriereplan">
         <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-          <div className="">
+          <div className="" id="arriereplan">
             <div className="row justify-content-center">
               <div className="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
@@ -91,32 +92,44 @@ function Login() {
                       <p className="text-center small">Entrez votre email & mot de passe pour vous connecter</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="row g-3 needs-validation" novalidate>
-                      <div className="col-12">
-                        <label for="yourUsername" className="form-label">Email</label>
-                        <div className="input-group has-validation">
-                          <input type="text" name="emailUser" className="form-control" id="emailUser" 
-                            required onChange={event => setEmail(event.target.value)} />
-                          <div className="invalid-feedback">{message}.</div>
+                    {isLoading ? ( // Affichage du spinner si isLoading est true
+                      <div className="d-flex justify-content-center my-4">
+                        <span className="spinner-border text-primary" role="status" aria-hidden="true"></span>
+                        <span className="sr-only">Chargement...</span>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleSubmit} className="row g-3 needs-validation" noValidate>
+                        <div className="col-12">
+                          <label htmlFor="yourUsername" className="form-label">Email</label>
+                          <div className="input-group has-validation">
+                            <input type="text" name="emailUser" className="form-control" id="emailUser" 
+                              required onChange={event => setEmail(event.target.value)} />
+                            <div className="invalid-feedback">{message}.</div>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="col-12">
-                        <label for="yourPassword" className="form-label">Password</label>
-                        <input type="password" name="passwordUser" className="form-control" id="passwordUser" 
-                          required onChange={event => setPassword(event.target.value)} />
-                        <div className="invalid-feedback">{message}!</div>
-                      </div>
+                        <div className="col-12">
+                          <label htmlFor="yourPassword" className="form-label">Password</label>
+                          <input type="password" name="passwordUser" className="form-control" id="passwordUser" 
+                            required onChange={event => setPassword(event.target.value)} />
+                          <div className="invalid-feedback">{message}!</div>
+                        </div>
 
-                      <div className="col-12">
-                        <button className="btn btn-primary w-100">Login</button>
-                      </div>
-                      <div className="sent-message"><p>{message}</p></div>
-                      <div className="col-12">
-                        <p className="small mb-0">Connecter vous pour ou <Link to="/">Rentrez à l'accueil</Link></p>
-                      </div>
-                    </form>
-
+                        <div className="col-12">
+                          <button className="btn btn-primary w-100" disabled={isLoading}>
+                            {isLoading ? (
+                              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            ) : (
+                              'Login'
+                            )}
+                          </button>
+                        </div>
+                        <div className="sent-message"><p>{message}</p></div>
+                        <div className="col-12">
+                          <p className="small mb-0">Connecter vous pour ou <Link to="/">Rentrez à l'accueil</Link></p>
+                        </div>
+                      </form>
+                    )}
                   </div>
                 </div>
 

@@ -1,50 +1,59 @@
-import React from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import UsersService from '../../services/usersService';
 
 
 function Aside(){
+  const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkToken = async () => {
+        try {
+            const response = await UsersService.verifyToken();
+            if (!response.valid) { 
+            navigate('/login');
+            }
+        } catch (error) {
+            console.error("Erreur de vérification du token", error);
+            navigate('/login');
+        }
+        };
+
+        checkToken();
+    }, [navigate]);
 
     return(
-        <aside id="sidebar" className="sidebar">
+        <aside id="sidebar" className="sidebar" >
       
           <ul className="sidebar-nav" id="sidebar-nav">
       
             <li className="nav-item">
-              <a className="nav-link " href="index.html">
+              <Link className="nav-link collapsed" to="/dashboard/dash">
                 <i className="bi bi-grid"></i>
+               
                 <span>Dashboard</span>
-              </a>
+                </Link>
+              
             </li>
       
             <li className="nav-item">
-              <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                <i className="bi bi-gem"></i><span>Icons</span><i className="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                  <a href="icons-bootstrap.html">
-                    <i className="bi bi-circle"></i><span>Bootstrap Icons</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="icons-remix.html">
-                    <i className="bi bi-circle"></i><span>Remix Icons</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="icons-boxicons.html">
-                    <i className="bi bi-circle"></i><span>Boxicons</span>
-                  </a>
-                </li>
-              </ul>
+              <Link className="nav-link collapsed" to="/dashboard/menus">
+                <i className="bi bi-layout-text-window-reverse"></i>
+               
+                <span>Menus</span>
+                </Link>
+              
             </li>
       
-            <li className="nav-heading">Pages</li>
+  
       
             <li className="nav-item">
-              <a className="nav-link collapsed" href="users-profile.html">
+              <Link className="nav-link collapsed" to="/dashboard/reservation">
                 <i className="bi bi-person"></i>
-                <span>Profile</span>
-              </a>
+                <span>Reservation</span>
+              </Link>
             </li>
       
             <li className="nav-item">

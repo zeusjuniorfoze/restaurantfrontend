@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Routes, Route, Navigate } from 'react-router-dom';
 import HeaderAdmin from '../../components/admin/HeaderAdmin';
 import Aside from '../../components/admin/Aside';
-import UsersService from '../../services/usersService';
+import FootAdmin from '../../components/admin/FootAdmin';
+import Menus from '../../components/admin/Menus';
+import DashboardAdmin from '../../components/admin/DashboardAdmin';
 
+import UsersService from '../../services/usersService';
 
 function Dashboard() {
   const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
@@ -31,8 +34,10 @@ function Dashboard() {
       <HeaderAdmin />
       <Aside />
       <main id="mains" className="mains">
-        {/* Contenu du tableau de bord */}
+        
+
       </main>
+      <FootAdmin />
     </>
   );
 }
