@@ -31,20 +31,6 @@ function DashboardAdmin() {
             }
         };
 
-        const fetchPlatsData = async () => {
-            try {
-                // Appel pour récupérer le nombre de types de plats
-                const typesResponse = await menuService.getMenu(); // Supposons que cette fonction existe
-                setNombreTypesPlats(typesResponse.data.length); // Ajuste selon la structure de la réponse
-
-                // Appel pour récupérer le nombre total de plats
-                const platsResponse = await menuService.getTotalPlats(); // Supposons que cette fonction existe
-                setNombreTotalPlats(platsResponse.length); // Ajuste selon la structure de la réponse
-            } catch (error) {
-                console.error("Erreur lors de la récupération des données des plats:", error);
-            }
-        };
-
         checkToken();
         fetchMenus();
        

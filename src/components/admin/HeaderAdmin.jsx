@@ -1,7 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import usersService from '../../services/usersService';
 
 
 function HeaderAdmin(){
+
+  const [nomuser, setNom] = useState('');
+  const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
+    const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkToken = async () => {
+        try {
+            const response = await usersService.verifyToken();
+            if (!response.valid) { 
+                navigate('/login');
+            }
+        } catch (error) {
+            console.error("Erreur de vérification du token", error);
+            navigate('/login');
+        }
+    };
+
+    checkToken();
+    fetchUser();
+   
+}, []);
+
+  const fetchUser = async () => {
+        
+    try {
+        const response = await usersService.getLogin();
+
+       setNom(response.data.data.nomUser)
+    } catch (error) {
+        console.error("Erreur lors de la récupération des menus:", error);
+    } 
+};
 
     return(
 
@@ -15,17 +51,12 @@ function HeaderAdmin(){
           <i className="bi bi-list toggle-sidebar-btn"></i>
         </div>
     
-        <div className="search-bar">
-          <form className="search-form d-flex align-items-center" method="POST" action="#">
-            <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
-            <button type="submit" title="Search"><i className="bi bi-search"></i></button>
-          </form>
-        </div>
+       
     
         <nav className="headers-nav ms-auto">
           <div className="d-flex align-items-center">
   
-          <span >K. Anderson</span>
+          <span >{nomuser}</span>
           
     
           </div>
