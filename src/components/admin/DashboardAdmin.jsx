@@ -17,6 +17,7 @@ function DashboardAdmin() {
     const [nombreTotalPlats, setNombreTotalPlats] = useState(0);
     const [nombreReservation, setReservation] = useState(0);
 
+   
     useEffect(() => {
         const checkToken = async () => {
             try {
@@ -45,6 +46,7 @@ function DashboardAdmin() {
         };
 
         checkToken();
+        fetchMenus();
        
     }, [navigate]);
 
@@ -74,9 +76,7 @@ function DashboardAdmin() {
         } 
     };
 
-    useEffect(() => {
-        fetchMenus();
-    }, []);
+    
 
     return (
         <>

@@ -69,7 +69,7 @@ function Aside(){
             <li className="nav-item">
               <a className="nav-link collapsed" href="/login">
                 <i className="bi bi-question-circle"></i>
-                <span>F.A.Q</span>
+                <span>Sign Out</span>
               </a>
             </li>
             
