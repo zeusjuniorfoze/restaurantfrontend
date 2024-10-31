@@ -6,6 +6,7 @@ import HeaderAdmin from './HeaderAdmin';
 import Aside from './Aside';
 import FootAdmin from './FootAdmin';
 import menuService from "../../services/menuService";
+import reservationService from '../../services/reservationService';
 
 function DashboardAdmin() {
     const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
@@ -14,6 +15,7 @@ function DashboardAdmin() {
     // États pour stocker le nombre de types de plats et le nombre total de plats
     const [nombreTypesPlats, setNombreTypesPlats] = useState(0);
     const [nombreTotalPlats, setNombreTotalPlats] = useState(0);
+    const [nombreReservation, setReservation] = useState(0);
 
     useEffect(() => {
         const checkToken = async () => {
@@ -49,19 +51,23 @@ function DashboardAdmin() {
     const fetchMenus = async () => {
         
         try {
+            const resp = await reservationService.getReservation();
+            const countEnCour = resp.data.data.filter((reservation) => reservation.statureservation === "En cours..").length;
+            setReservation(countEnCour);
             const response = await menuService.getMenu();
-            const typesPlats = response.data.data;
+
+            // Initialiser le compteur pour le nombre total de platinfo
+            let totalPlatInfo = 0;
+
+            // Parcourir chaque type de plat et additionner le nombre d'objets platinfo
+            response.data.data.forEach((typePlat) => {
+            if (typePlat.platinfo) {
+                totalPlatInfo += typePlat.platinfo.length;
+            }
+            });
+            setNombreTotalPlats(totalPlatInfo)
             setNombreTypesPlats(response.data.data.length);
             
-
-            const nombrePlatsParType = response.data.data.map(type => {
-                return {
-                    type: type.typePlat,
-                    nombre: type.plats.length // Compte le nombre de plats dans ce type
-                };
-            });
-            console.log(nombrePlatsParType.nombre)
-            setNombreTotalPlats(nombrePlatsParType.nombre); 
            
         } catch (error) {
             console.error("Erreur lors de la récupération des menus:", error);
@@ -100,7 +106,6 @@ function DashboardAdmin() {
                                                 </div>
                                                 <div className="ps-3">
                                                     <h6>{nombreTypesPlats}</h6>
-                                                    <span className="text-success small pt-1 fw-bold">12%</span> <span className="text-muted small pt-2 ps-1">increase</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,7 +122,6 @@ function DashboardAdmin() {
                                                 </div>
                                                 <div className="ps-3">
                                                     <h6>{nombreTotalPlats}</h6>
-                                                    <span className="text-success small pt-1 fw-bold">8%</span> <span className="text-muted small pt-2 ps-1">increase</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -133,8 +137,7 @@ function DashboardAdmin() {
                                                     <i className="bi bi-people"></i>
                                                 </div>
                                                 <div className="ps-3">
-                                                    <h6>1244</h6>
-                                                    <span className="text-danger small pt-1 fw-bold">12%</span> <span className="text-muted small pt-2 ps-1">decrease</span>
+                                                    <h6>{nombreReservation}</h6>
                                                 </div>
                                             </div>
                                         </div>

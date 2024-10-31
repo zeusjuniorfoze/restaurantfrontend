@@ -8,7 +8,7 @@ function HeaderAdmin(){
         <header id="headers" className="headers fixed-top d-flex align-items-center">
 
         <div className="d-flex align-items-center justify-content-between">
-          <a href="index.html" className="logo d-flex align-items-center">
+          <a href="/dashboard" className="logo d-flex align-items-center">
             <img src="assetsDashboard/img/logo.png" alt="" />
             <span className="d-none d-lg-block">RestaurantAdmin</span>
           </a>

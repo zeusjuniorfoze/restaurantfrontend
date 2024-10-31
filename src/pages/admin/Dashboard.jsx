@@ -4,14 +4,15 @@ import { useNavigate, Routes, Route, Navigate } from 'react-router-dom';
 import HeaderAdmin from '../../components/admin/HeaderAdmin';
 import Aside from '../../components/admin/Aside';
 import FootAdmin from '../../components/admin/FootAdmin';
-import Menus from '../../components/admin/Menus';
-import DashboardAdmin from '../../components/admin/DashboardAdmin';
+
 
 import UsersService from '../../services/usersService';
+import { useDispatch } from 'react-redux';
 
 function Dashboard() {
   const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const checkToken = async () => {
@@ -29,14 +30,19 @@ function Dashboard() {
     checkToken();
   }, [navigate]);
 
+  useEffect(() => {
+    dispatch({ type: 'SET_ADMIN_ROUTE', payload: true });
+
+    return () => {
+      dispatch({ type: 'SET_ADMIN_ROUTE', payload: false });
+    };
+  }, [dispatch]);
+
   return (
     <>
       <HeaderAdmin />
       <Aside />
-      <main id="mains" className="mains">
-        
-
-      </main>
+     
       <FootAdmin />
     </>
   );

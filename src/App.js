@@ -24,12 +24,9 @@ function App() {
           <Route path='/reservations' element={<Reservations />} />
           <Route path='/login' element={<Login />} />
           {/* Route protégée pour le tableau de bord */}
-          <Route path='/dashboard/*' element={<Dashboard />}/>
-
-          <Route path="/dashboard" element={<Navigate to="/dashboard/dash" />} /> 
-          <Route path="/dashboard/dash" element={<DashboardAdmin />} />
-          <Route path="/dashboard/menus" element={<MenusAdmin />} />
-          <Route path="/dashboard/reservation" element={<ReservationAdmin />} />
+          <Route path='/dashboard' element={<DashboardAdmin />}/>
+          <Route path="/dashboardmenus" element={<MenusAdmin />} />
+          <Route path="/dashboardreservation" element={<ReservationAdmin />} /> 
     
         </Routes>
       </BrowserRouter>

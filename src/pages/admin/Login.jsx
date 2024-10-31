@@ -7,7 +7,7 @@ function Login() {
   const [emailUser, setEmail] = useState('');
   const [passwordUser, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(true); // État de chargement initialisé à "true" pour vérifier le token au chargement
+  const [isLoading, setIsLoading] = useState(true); // Initialiser à true pour le chargement initial
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,11 +18,11 @@ function Login() {
         if (response.valid) { 
           navigate('/dashboard');
         } else {
-          setIsLoading(false); // Désactive le chargement si le token n'est pas valide
+          setIsLoading(false); // Désactiver le chargement si le token n'est pas valide
         }
       } catch (error) {
         console.error("Erreur de vérification du token", error);
-        setIsLoading(false); // Désactive le chargement en cas d'erreur
+        setIsLoading(false); // Désactiver le chargement en cas d'erreur
       }
     };
 
