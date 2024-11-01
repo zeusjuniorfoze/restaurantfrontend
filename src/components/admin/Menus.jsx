@@ -7,6 +7,26 @@ import Aside from './Aside';
 import FootAdmin from './FootAdmin';
 import menuService from "../../services/menuService";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Oval } from 'react-loader-spinner';
+
+const Loader = ({ loading }) => (
+    loading && (
+        <div style={loaderStyle}>
+            <Oval color="#00BFFF" height={80} width={80} />
+        </div>
+    )
+);
+
+const loaderStyle = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 9999,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: '50%',
+    padding: '20px',
+};
 
 function Menus() {
     const { userRole } = useSelector((state) => state.auth);
@@ -26,6 +46,8 @@ function Menus() {
     const [showAddTypePlatModal, setShowAddTypePlatModal] = useState(false);
     const [showEditTypePlatModal, setShowEditTypePlatModal] = useState(false);
     const [newPlat, setNewPlat] = useState({ nomplat: '', descripplat: '', prixplat: '' });
+    const [loadingDelete, setLoadingDelete] = useState(false);
+    
 
     useEffect(() => {
         const checkToken = async () => {
@@ -114,6 +136,7 @@ function Menus() {
             await menuService.modifierPlat(selectedTypePlat, selectedPlat._id, updatedPlat);
             setMessage("Le plat a été mis à jour avec succès.");
             await fetchMenus(); // Actualiser les menus
+            setShowModal(false);
         } catch (error) {
             console.error("Erreur lors de la mise à jour du plat:", error);
             setMessage("Erreur lors de la mise à jour du plat : " + error.message);
@@ -124,7 +147,6 @@ function Menus() {
                 setMessage('');
             }, 5000);
         }
-
         
     };
 
@@ -135,24 +157,33 @@ function Menus() {
             newPlatData.append('nomplat', newPlat.nomplat);
             newPlatData.append('descripplat', newPlat.descripplat);
             newPlatData.append('prixplat', newPlat.prixplat);
+            
             if (imageFile) {
                 newPlatData.append('imageplat', imageFile);
             }
-
+    
+            console.log(newPlatData);  // Vérification de la structure des données envoyées
+    
             await menuService.ajouterPlat(selectedTypePlat || menus.data[0]._id, newPlatData);
             setMessage("Le plat a été ajouté avec succès.");
-            await fetchMenus();
+            
+            await fetchMenus(); // Rafraîchir les menus après ajout
         } catch (error) {
             console.error("Erreur lors de l'ajout du plat:", error);
-            setMessage("Erreur lors de l'ajout du plat : " + error.message);
+            
+            // Ajouter plus de détails pour déboguer l'erreur
+            const errorMsg = error.response?.data?.message || error.message || "Erreur inconnue";
+            setMessage("Erreur lors de l'ajout du plat : " + errorMsg);
         } finally {
             setLoading(false);
             setShowAddModal(false);
+            
             setTimeout(() => {
                 setMessage('');
             }, 5000);
         }
     };
+    
 
     const handleDeleteTypePlat = async () => {
         if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce menu ?")) return;
@@ -315,8 +346,14 @@ function Menus() {
                                                             <button 
                                                                 className="btn btn-danger" 
                                                                 onClick={() => handleDeletePlat(selectedTypePlat, plat.nomplat)}
+                                                                disabled={loading}
                                                             >
-                                                                Supprimer
+                                                                {loadingDelete ? (
+                                                                            <Loader loading={loadingDelete} /> // Affiche le Loader pendant la suppression
+                                                                        ) : (
+                                                                            "Supprimer"
+                                                                        )}
+                                                                
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -346,8 +383,14 @@ function Menus() {
                                                 className="btn btn-danger" 
                                                 onClick={handleDeleteTypePlat}
                                                 disabled={selectedTypePlat === ''}
+                                                
                                             >
-                                                Supprimer ce menu
+                                                {loadingDelete ? (
+                                                    <Loader loading={loadingDelete} /> // Affiche le Loader pendant la suppression
+                                                    ) : (
+                                                           "Supprimer ce menu"
+                                                        )}
+                                              
                                             </button>
                                         </div>
                                     )}
@@ -362,11 +405,14 @@ function Menus() {
 
             {/* Modal pour ajouter un type de plat */}
             <div className={`modal fade ${showAddTypePlatModal ? 'show' : ''}`} style={{ display: showAddTypePlatModal ? 'block' : 'none' }}>
+                <Loader loading={loading} />
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Ajouter un menu</h5>
-                            <button type="button" className="btn-close" onClick={() => setShowAddTypePlatModal(false)}></button>
+                            <button type="button" className="btn-close" onClick={() => setShowAddTypePlatModal(false)}
+                                
+                                ></button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
@@ -376,13 +422,18 @@ function Menus() {
                                     className="form-control" 
                                     id="typeplat"
                                     value={newTypePlat} 
-                                    onChange={(e) => setNewTypePlat(e.target.value)} 
+                                    onChange={(e) => setNewTypePlat(e.target.value)}
+                                    disabled={loading} 
                                 />
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => setShowAddTypePlatModal(false)}>Fermer</button>
-                            <button type="button" className="btn btn-success" onClick={handleAddMenus}>Ajouter</button>
+                            <button type="button" className="btn btn-secondary" onClick={() => setShowAddTypePlatModal(false)}
+                                disabled={loading}
+                                >Fermer</button>
+                            <button type="button" className="btn btn-success" onClick={handleAddMenus}
+                            disabled={loading}
+                            >Ajouter</button>
                         </div>
                     </div>
                 </div>
@@ -391,6 +442,7 @@ function Menus() {
 
 
             <div className={`modal fade ${showEditTypePlatModal ? 'show' : ''}`} style={{ display: showEditTypePlatModal ? 'block' : 'none' }}>
+                <Loader loading={loading} />
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -405,13 +457,18 @@ function Menus() {
                                     className="form-control" 
                                     id="typeplat"
                                     value={updatedTypePlat} 
-                                    onChange={(e) => setUpdatedTypePlat(e.target.value)} 
+                                    onChange={(e) => setUpdatedTypePlat(e.target.value)}
+                                    disabled={loading} 
                                 />
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => setShowEditTypePlatModal(false)}>Fermer</button>
-                            <button type="button" className="btn btn-warning" onClick={handleEditMenu}>Modifier</button>
+                            <button type="button" className="btn btn-secondary" onClick={() => setShowEditTypePlatModal(false)}
+                                disabled={loading}
+                                >Fermer</button>
+                            <button type="button" className="btn btn-warning" onClick={handleEditMenu}
+                            disabled={loading}
+                            >Modifier</button>
                         </div>
                     </div>
                 </div>
@@ -420,11 +477,12 @@ function Menus() {
 
             {/* Modal pour éditer un plat */}
             <div className={`modal fade ${showModal ? 'show' : ''}`} style={{ display: showModal ? 'block' : 'none' }}>
+                <Loader loading={loading} />
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Modifier le Plat</h5>
-                            <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+                            <button type="button" className="btn-close" onClick={() => setShowModal(false)} disabled={loading}></button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
@@ -434,6 +492,7 @@ function Menus() {
                                     className="form-control" 
                                     value={selectedPlat?.nomplat} 
                                     onChange={(e) => setSelectedPlat({ ...selectedPlat, nomplat: e.target.value })} 
+                                    disabled={loading}
                                 />
                             </div>
                             <div className="mb-3">
@@ -442,6 +501,7 @@ function Menus() {
                                     className="form-control" 
                                     value={selectedPlat?.descripplat} 
                                     onChange={(e) => setSelectedPlat({ ...selectedPlat, descripplat: e.target.value })} 
+                                    disabled={loading}
                                 ></textarea>
                             </div>
                             <div className="mb-3">
@@ -451,6 +511,7 @@ function Menus() {
                                     className="form-control" 
                                     value={selectedPlat?.prixplat} 
                                     onChange={(e) => setSelectedPlat({ ...selectedPlat, prixplat: e.target.value })} 
+                                    disabled={loading}
                                 />
                             </div>
                             <div className="mb-3">
@@ -459,19 +520,35 @@ function Menus() {
                                     type="file" 
                                     className="form-control" 
                                     onChange={(e) => setImageFile(e.target.files[0])} 
+                                    disabled={loading}
                                 />
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Fermer</button>
-                            <button type="button" className="btn btn-primary" onClick={handleSaveChanges}>Sauvegarder les modifications</button>
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary" 
+                                onClick={() => setShowModal(false)} 
+                                disabled={loading}
+                            >
+                                Fermer
+                            </button>
+                            <button 
+                                type="button" 
+                                className="btn btn-primary" 
+                                onClick={handleSaveChanges} 
+                                disabled={loading}
+                            >
+                                Sauvegarder les modifications
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
+</div>
 
             {/* Modal pour ajouter un plat */}
             <div className={`modal fade ${showAddModal ? 'show' : ''}`} style={{ display: showAddModal ? 'block' : 'none' }}>
+                <Loader loading={loading} />
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -482,18 +559,20 @@ function Menus() {
                             <div className="mb-3">
                                 <label className="form-label">Nom du plat</label>
                                 <input 
-                                    type="text" 
+                                    type="text"
                                     className="form-control" 
                                     value={newPlat.nomplat} 
                                     onChange={(e) => setNewPlat({ ...newPlat, nomplat: e.target.value })} 
+                                    disabled={loading}
                                 />
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Description</label>
                                 <textarea 
-                                    className="form-control" 
+                                    className="form-control"
                                     value={newPlat.descripplat} 
-                                    onChange={(e) => setNewPlat({ ...newPlat, descripplat: e.target.value })} 
+                                    onChange={(e) => setNewPlat({ ...newPlat, descripplat: e.target.value })}
+                                    disabled={loading} 
                                 ></textarea>
                             </div>
                             <div className="mb-3">
@@ -502,7 +581,8 @@ function Menus() {
                                     type="number" 
                                     className="form-control" 
                                     value={newPlat.prixplat} 
-                                    onChange={(e) => setNewPlat({ ...newPlat, prixplat: e.target.value })} 
+                                    onChange={(e) => setNewPlat({ ...newPlat, prixplat: e.target.value })}
+                                    disabled={loading} 
                                 />
                             </div>
                             <div className="mb-3">
@@ -510,13 +590,18 @@ function Menus() {
                                 <input 
                                     type="file" 
                                     className="form-control" 
-                                    onChange={(e) => setImageFile(e.target.files[0])} 
+                                    onChange={(e) => setImageFile(e.target.files[0])}
+                                    disabled={loading} 
                                 />
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Fermer</button>
-                            <button type="button" className="btn btn-success" onClick={handleAddPlat}>Ajouter le plat</button>
+                            <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}
+                                disabled={loading}
+                                >Fermer</button>
+                            <button type="button" className="btn btn-success" onClick={handleAddPlat}
+                            disabled={loading}
+                            >Ajouter le plat</button>
                         </div>
                     </div>
                 </div>
