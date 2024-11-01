@@ -451,7 +451,7 @@ function Menus() {
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
-                                <label className="form-label">Nouveau Nom du menu</label>
+                                <label className="form-label">nouveau Nom du menu</label>
                                 <input 
                                     type="text" 
                                     className="form-control" 
