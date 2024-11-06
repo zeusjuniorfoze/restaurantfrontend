@@ -40,7 +40,7 @@ function DashboardAdmin() {
         
         try {
             const resp = await reservationService.getReservation();
-            const countEnCour = resp.data.data.filter((reservation) => reservation.statureservation === "En cours..").length;
+            const countEnCour = resp.data.data.filter((reservation) => reservation.statutReservation === "En cours..").length;
             setReservation(countEnCour);
             const response = await menuService.getMenu();
 

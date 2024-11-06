@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const url = "http://localhost:8080/api";
-const url = "https://restaurantbackend-flax.vercel.app/api";
+const url = "http://localhost:8080/api";
+//const url = "https://restaurantbackend-flax.vercel.app/api";
 
 class User {
 
@@ -80,6 +80,33 @@ class User {
     }
   }
 
+  async updateProfile(updatedData) {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`${url}/user-update/`, updatedData, {
+            headers: {
+                'Authorization': token,
+            },
+        });
+        return response; // Retourner les données de la réponse
+    } catch (error) {
+        throw error.response ? error.response.data : new Error('Erreur lors de la mise à jour de utilisateur');
+    }
+}
+
+async changePassword(updatedData) {
+  try {
+      const token = localStorage.getItem('token');
+      const response = await axios.put(`${url}/user-update-password/`, updatedData, {
+          headers: {
+              'Authorization': token,
+          },
+      });
+      return response; // Retourner les données de la réponse
+  } catch (error) {
+      throw error.response ? error.response.data : new Error('Erreur lors de la mise à jour de utilisateur');
+  }
+}
 
   
 }

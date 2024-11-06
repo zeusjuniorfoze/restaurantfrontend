@@ -58,8 +58,15 @@ function Aside() {
 
         <li className="nav-item">
           <Link className="nav-link collapsed" to="/dashboardreservation">
-            <i className="bi bi-person"></i>
+            <i className="bi bi-journal-text"></i>
             <span>Reservation</span>
+          </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link className="nav-link collapsed" to="/dashboardprofile">
+            <i className="bi bi-person"></i>
+            <span>Profile</span>
           </Link>
         </li>
 

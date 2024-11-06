@@ -10,6 +10,7 @@ import Dashboard from './pages/admin/Dashboard';
 import MenusAdmin from './components/admin/Menus';
 import ReservationAdmin from './components/admin/ReservationAdmin';
 import DashboardAdmin from './components/admin/DashboardAdmin';
+import Profile from './components/admin/Profile';
 import PrivateRoute from './reducers/PrivateRoute'; 
 
 function App() {
@@ -26,7 +27,8 @@ function App() {
           {/* Route protégée pour le tableau de bord */}
           <Route path='/dashboard' element={<DashboardAdmin />}/>
           <Route path="/dashboardmenus" element={<MenusAdmin />} />
-          <Route path="/dashboardreservation" element={<ReservationAdmin />} /> 
+          <Route path="/dashboardreservation" element={<ReservationAdmin />} />
+          <Route path="/dashboardprofile" element={<Profile />} /> 
     
         </Routes>
       </BrowserRouter>
