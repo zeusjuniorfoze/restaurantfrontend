@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux'; 
 import store from './store';
+import './i18n';
 
 
 export default function Index(){

@@ -2,8 +2,10 @@ import {Link} from 'react-router-dom';
 import React, { useEffect } from 'react';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
+import { useTranslation } from 'react-i18next';
 
 function Main(){
+    const { t } = useTranslation();
 
     useEffect(() => {
         AOS.init({
@@ -24,11 +26,11 @@ function Main(){
                 <div className="container">
                     <div className="row">
                     <div className="col-lg-8 d-flex flex-column align-items-center align-items-lg-start">
-                        <h2 data-aos="fade-up" data-aos-delay="100">Bienvenue au <span>RestaurantPS</span></h2>
-                        <p data-aos="fade-up" data-aos-delay="200">Donne du bon depuis 18 ans!</p>
+                        <h2 data-aos="fade-up" data-aos-delay="100">{t('hero.welcome')}<span>RestaurantPS</span></h2>
+                        <p data-aos="fade-up" data-aos-delay="200">{t('hero.slogan')}</p>
                         <div className="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-                        <Link to='/menus' className="cta-btn">Menu</Link>
-                        <Link to='/reservations' className="cta-btn">Reserver une Table</Link>
+                        <Link to='/menus' className="cta-btn">{t('menus')}</Link>
+                        <Link to='/reservations' className="cta-btn">{t('reserver_table')}</Link>
                         </div>
                     </div>
                     
@@ -47,17 +49,17 @@ function Main(){
                         <img src="assets/img/about.jpg" className="img-fluid about-img" alt="" />
                     </div>
                     <div className="col-lg-6 order-2 order-lg-1 content">
-                        <h3>Nos Engagements pour Vous Satisfaire</h3>
+                        <h3>{t('about.title')}</h3>
                         <p className="fst-italic">
-                        Chez RestaurantPS, nous croyons que chaque repas doit être une expérience inoubliable. Nos chefs passionnés préparent des plats savoureux en utilisant uniquement des ingrédients frais et de saison, soigneusement sélectionnés pour vous offrir le meilleur. Que vous soyez amateur de cuisine traditionnelle ou en quête de nouvelles saveurs, notre menu varié saura ravir vos papilles.
+                            {t('about.intro')}
                         </p>
                         <ul>
-                        <li><i className="bi bi-check2-all"></i> <span>Ingrédients frais et locaux.</span></li>
-                        <li><i className="bi bi-check2-all"></i> <span>Une cuisine authentique et créative.</span></li>
-                        <li><i className="bi bi-check2-all"></i> <span>Réservation facile et commande en ligne.</span></li>
+                        <li><i className="bi bi-check2-all"></i> <span>{t('about.commitments.item1')}</span></li>
+                        <li><i className="bi bi-check2-all"></i> <span>{t('about.commitments.item2')}</span></li>
+                        <li><i className="bi bi-check2-all"></i> <span>{t('about.commitments.item3')}</span></li>
                         </ul>
                         <p>
-                        Dans une ambiance conviviale et chaleureuse, nous mettons un point d'honneur à offrir un service attentionné et personnalisé, afin que chaque visite soit un véritable moment de plaisir. Que vous veniez en famille, entre amis ou pour un dîner romantique, notre équipe se fera un plaisir de vous accueillir.
+                        {t('about.details')}
                         </p>
                     </div>
                     </div>
@@ -71,8 +73,8 @@ function Main(){
 
                 
                 <div className="container section-title" data-aos="fade-up">
-                    <h2>votre choix</h2>
-                    <p>Pourquoi choisir notre restaurant ?</p>
+                    <h2>{t('why_us.title')}</h2>
+                    <p>{t('why_us.subtitle')}</p>
                 </div>
 
                 <div className="container">
@@ -82,24 +84,24 @@ function Main(){
                     <div className="col-lg-4" data-aos="fade-up" data-aos-delay="100">
                         <div className="card-item">
                         <span>01</span>
-                        <h4><a href="" className="stretched-link">L'expérience culinaire par excellence</a></h4>
-                        <p>chaque plat raconte une histoire. Nous allions avec soin des saveurs authentiques et des techniques modernes pour vous offrir une cuisine raffinée et créative.</p>
+                        <h4><a href="" className="stretched-link">{t('why_us.reasons.reason1.title')}</a></h4>
+                        <p>{t('why_us.reasons.reason1.description')}</p>
                         </div>
                     </div>
 
                     <div className="col-lg-4" data-aos="fade-up" data-aos-delay="200">
                         <div className="card-item">
                         <span>02</span>
-                        <h4><a href="" className="stretched-link">Des saveurs qui inspirent</a></h4>
-                        <p>c’est opter pour une cuisine pleine de passion, de créativité et de respect des produits. Notre engagement est simple : vous offrir une carte composée de plats maison, préparés avec des ingrédients locaux et de première qualité.</p>
+                        <h4><a href="" className="stretched-link">{t('why_us.reasons.reason3.title')}</a></h4>
+                        <p>{t('why_us.reasons.reason3.description')}</p>
                         </div>
                     </div>
 
                     <div className="col-lg-4" data-aos="fade-up" data-aos-delay="300">
                         <div className="card-item">
                         <span>03</span>
-                        <h4><a href="" className="stretched-link">Une aventure gastronomique unique              </a></h4>
-                        <p>Parce que nous offrons bien plus qu'un repas, nous vous offrons une aventure gastronomique. </p>
+                        <h4><a href="" className="stretched-link">{t('why_us.reasons.reason3.title')}</a></h4>
+                        <p>{t('why_us.reasons.reason3.description')}</p>
                         </div>
                     </div>
 
@@ -114,8 +116,8 @@ function Main(){
 
                 
                 <div className="container section-title" data-aos="fade-up">
-                <h2>Gallery</h2>
-                <p>Photo venant du Restaurant</p>
+                <h2>{t('gallery.title')}</h2>
+                <p>{t('gallery.description')}</p>
                 </div>
 
                 <div className="container-fluid" data-aos="fade-up" data-aos-delay="100">

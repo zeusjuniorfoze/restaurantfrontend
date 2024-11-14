@@ -1,0 +1,193 @@
+{
+    "welcome": "Welcome to our application",
+    "accueil" : "Home",
+    "menus": "Menus",
+    "reserver_table": "Book a Table",
+    "reservations": "Reservations",
+
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "signOut": "Sign Out",
+    "typemenus" : "menus type",
+    "plats" : "Dishes",
+    "listmenus": "Menu List",
+    "selectmenu" : "Select a menu type",
+
+
+    "profileDetailsTitle": "Profile Details",
+    "nameLabel": "Name",
+    "roleLabel": "Role",
+    "phoneLabel": "Phone Number",
+    "emailLabel": "Email",
+    "editProfileTab": "Edit Profile",
+    "changePasswordTab": "Change Password",
+    "currentPasswordLabel": "Current Password",
+    "newPasswordLabel": "New Password",
+    "renewPasswordLabel": "Confirm Password",
+    "saveButton": "Save",
+    "changePasswordButton": "Change Password",
+    "profileUpdateSuccess": "Profile updated successfully!",
+    "passwordUpdateSuccess": "Password updated successfully!",
+    "passwordMismatchError": "Passwords do not match.",
+    "passwordUpdateError": "Error updating password",
+
+
+    "filterByStatus": "Filter by status:",
+    "all": "All",
+    "confirmed": "Confirmed",
+    "rejected": "Rejected",
+    "clientName": "Client Name",
+    "clientNumber": "Client Number",
+    "clientEmail": "Client Email",
+    "reservationDate": "Reserved Date",
+    "reservationTime": "Reserved Time",
+    "reservedSeats": "Reserved Seats",
+    "reservationReason": "Reservation Reason",
+    "status": "Status",
+    "actions": "Actions",
+    "noReservationsFound": "No reservations found.",
+    "confirm": "Confirmer",
+    "reject": "Rejeter",
+    "reservationConfirmed": "Réservation confirmée",
+    "reservationRejected": "Réservation rejetée",
+    "errorConfirming": "Erreur lors de la confirmation de la réservation",
+    "errorRejecting": "Erreur lors du rejet de la réservation",
+
+
+    "ajoutmenu" : "Add menu",
+    "modifiermenu" : "Edit menu",
+    "rechercheplat" : "Search for a dish",
+    "ajoutplat" : "Add a dish",
+    "description": "Description",
+    "image": "Image",
+    "price": "Price",
+    "editer" : "Edit",
+    "Supprimer" : "Delete",
+    "aucunplat" : "No dishes found.",
+
+    "modal": {
+    "addMenuTitle": "Add Menu",
+    "editMenuTitle": "Edit Menu",
+    "editDishTitle": "Edit Dish",
+    "addDishTitle": "Add Dish",
+    "close": "Close",
+    "saveChanges": "Save Changes",
+    "add": "Add",
+    "addDish": "Add Dish",
+    "edit": "Edit"
+  },
+    "form": {
+      "menuName": "Menu Name",
+      "newMenuName": "New Menu Name",
+      "dishName": "Dish Name",
+      "description": "Description",
+      "price": "Price",
+      "dishImage": "Dish Image"
+    },
+
+
+    "hero": {
+        "welcome": "Welcome to ",
+        "slogan": "Serving goodness for 18 years!"
+  },
+
+  "about": {
+    "title": "Our Commitments to Satisfy You",
+    "intro": "At RestaurantPS, we believe that every meal should be an unforgettable experience. Our passionate chefs prepare delicious dishes using only fresh, seasonal ingredients, carefully selected to offer you the best. Whether you are a fan of traditional cuisine or looking for new flavors, our varied menu will delight your taste buds.",
+    "commitments": {
+      "item1": "Fresh and local ingredients.",
+      "item2": "Authentic and creative cuisine.",
+      "item3": "Easy reservation and online ordering."
+    },
+    "details": "In a friendly and warm atmosphere, we are committed to providing attentive and personalized service so that each visit is a real moment of pleasure. Whether you come with family, friends, or for a romantic dinner, our team will be happy to welcome you."
+  },
+
+  "why_us": {
+    "title": "Your choice",
+    "subtitle": "Why choose our restaurant?",
+    "reasons": {
+      "reason1": {
+        "title": "Exceptional culinary experience",
+        "description": "Each dish tells a story. We carefully blend authentic flavors with modern techniques to offer you refined and creative cuisine."
+      },
+      "reason2": {
+        "title": "Flavors that inspire",
+        "description": "Choosing us means opting for a cuisine full of passion, creativity, and respect for the products. Our commitment is simple: to offer you a menu of homemade dishes prepared with local and high-quality ingredients."
+      },
+      "reason3": {
+        "title": "A unique gastronomic adventure",
+        "description": "Because we offer more than just a meal, we offer a gastronomic adventure."
+      }
+    }
+  },
+
+  "gallery": {
+    "title": "Gallery",
+    "description": "Photos from the Restaurant"
+  },
+
+  "footer": {
+    "contact": {
+      "address": "National Gendarmerie",
+      "city": "Yaounde, Cameroon",
+      "phone": "Phone:",
+      "email": "Email:"
+    },
+    "services": {
+      "title": "Services",
+      "delivery": "Delivery",
+      "catering": "Catering service"
+    },
+    "copyright": {
+      "text": "© Copyright",
+      "allRights": "All Rights Reserved"
+    },
+    "credits": "Designed by"
+  },
+
+  "menu": {
+    "description": "List of Dishes",
+    "all": "All",
+    "defaultDescription": "Description not available"
+  },
+
+    "reservation": {
+      "form": {
+        "placeholders": {
+          "name": "Enter your name",
+          "email": "Enter your email",
+          "phone": "Enter your phone number",
+          "date": "Date",
+          "time": "Select time",
+          "people": "# of People",
+          "reason": "Reason"
+        },
+        "buttons": {
+          "submit": "Book a Table"
+        },
+        "messages": {
+          "loading": "Loading",
+          "errorMessage": "Error saving the reservation",
+          "successMessage": "Reservation saved successfully"
+        }
+      }
+    },
+    
+    "login": {
+      "title": "Login",
+      "subtitle": "Enter your email & password to log in", 
+      "placeholders": {
+        "email": "Email",
+        "password": "Password"
+      },
+      "loading": "Loading...",
+      "messages": {
+        "success": "Login successful, redirecting to the dashboard...",
+        "error": "Login error: Please check your information.", 
+        "loadingError":  "Error during login" ,
+        "loadingTokenError": "Token verification error"
+      },
+      "redirect": "Go to Home",
+      "footer": "Conçu par Powerks-soft"
+    }
+}

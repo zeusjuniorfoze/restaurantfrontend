@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import reservationService from "../../services/reservationService";
+import { useTranslation } from 'react-i18next';
+
 
 function Reservation() {
+  const { t } = useTranslation();
+
   const [nomClient, setNom] = useState('');
   const [emailClient, setEmail] = useState('');
   const [numeroClient, setNumero] = useState('');
@@ -25,9 +29,9 @@ function Reservation() {
 
       const response =  await reservationService.create(formData);
       if(response.data.success == true){
-          setMessage('Reservation enregistrer avec succes');
+          setMessage(t("reservation.form.messages.successMessage"));
       }else{
-          setMessage('Erreur lors de l\'enregistrement de la reservation');
+          setMessage(t("reservation.form.messages.errorMessage"));
       }
 
       setTimeout(function(){
@@ -57,8 +61,8 @@ function Reservation() {
   return (
     <section id="book-a-table" className="book-a-table section">
       <div className="container section-title" data-aos="fade-up">
-        <h2>RESERVATION</h2>
-        <p>Reserver une Table</p>
+        <h2>{t('reservations')}</h2>
+        <p>{t('reserver_table')}</p>
       </div>
       <div className="message-info"><p>{message}</p></div>
       
@@ -66,35 +70,35 @@ function Reservation() {
         <form onSubmit={handleSubmit} role="form" className="php-email-form">
           <div className="row gy-4">
             <div className="col-lg-4 col-md-6">
-              <input type="text" name="nomClient" className="form-control" id="name" placeholder="Entrer votre nom" 
+              <input type="text" name="nomClient" className="form-control" id="name" placeholder={t("reservation.form.placeholders.name")} 
                      required onChange={event => setNom(event.target.value)} />
             </div>
             <div className="col-lg-4 col-md-6">
-              <input type="email" className="form-control" name="emailClient" id="email" placeholder="Entrer votre email" 
+              <input type="email" className="form-control" name="emailClient" id="email" placeholder={t("reservation.form.placeholders.email")} 
                      required onChange={event => setEmail(event.target.value)} />
             </div>
             <div className="col-lg-4 col-md-6">
-              <input type="text" className="form-control" name="numeroClient" id="phone" placeholder="Entrer votre numero de telephone" 
+              <input type="text" className="form-control" name="numeroClient" id="phone" placeholder={t("reservation.form.placeholders.phone")}
                      required onChange={event => setNumero(event.target.value)} />
             </div>
             <div className="col-lg-4 col-md-6">
-              <input type="date" name="dateReservation" className="form-control" id="date" placeholder="Date" 
+              <input type="date" name="dateReservation" className="form-control" id="date" placeholder={t("reservation.form.placeholders.date")}
                      required min={today} onChange={event => setDate(event.target.value)} />
             </div>
             <div className="col-lg-4 col-md-6">
               <select className="form-control" name="heureReservation" id="time" required onChange={event => setHeure(event.target.value)}>
-                <option value="" >Sélectionner l'heure</option>
+                <option value="" >{t("reservation.form.placeholders.time")}</option>
                 {renderTimeOptions()}
               </select>
             </div>
             <div className="col-lg-4 col-md-6">
-              <input type="number" className="form-control" name="nombrePlace" id="people" placeholder="# Place" 
+              <input type="number" className="form-control" name="nombrePlace" id="people" placeholder={t("reservation.form.placeholders.people")} 
                      required onChange={event => setPlace(event.target.value)} />
             </div>
           </div>
 
           <div className="form-group mt-3">
-            <textarea className="form-control" name="motifReservation" rows="5" placeholder="Motif" 
+            <textarea className="form-control" name="motifReservation" rows="5" placeholder={t("reservation.form.placeholders.reason")} 
                       onChange={event => setMotif(event.target.value)}></textarea>
           </div>
 
@@ -102,7 +106,7 @@ function Reservation() {
             <div className="loading">Loading</div>
             <div className="error-message"></div>
             <div className="sent-message"><p>{message}</p></div>
-            <button className="submitbtn">Reserver une Table</button>
+            <button className="submitbtn">{t('reserver_table')}</button>
           </div>
         </form>
         

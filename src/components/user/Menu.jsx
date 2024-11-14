@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Isotope from 'isotope-layout';
 import menuService from "../../services/menuService";
+import { useTranslation } from 'react-i18next';
+
 
 function Menu(){
+  const { t } = useTranslation();
 
-      const [menus, setMenus] = useState({ data: [] }); 
+  const [menus, setMenus] = useState({ data: [] }); 
 
       const fetchMenus = async () => {
         try {
@@ -50,8 +53,8 @@ function Menu(){
 
      
         <div className="container section-title" data-aos="fade-up">
-          <h2>Menu</h2>
-          <p>Liste des plats</p>
+          <h2>{t('menus')}</h2>
+          <p>{t('menu.description')}</p>
         </div>
   
         <div className="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
@@ -59,7 +62,7 @@ function Menu(){
           <div className="row" data-aos="fade-up" data-aos-delay="100">
             <div className="col-lg-12 d-flex justify-content-center">
               <ul className="menu-filters isotope-filters">
-                <li data-filter="*" className="filter-active">Tous</li>
+                <li data-filter="*" className="filter-active">{t('menu.all')}</li>
                 {menus != undefined && menus.data.length > 0 && 
                   menus.data.map(menu => (
                     <li key={menu._id} data-filter={'.filter-'+menu.typeplat}>
@@ -83,7 +86,7 @@ function Menu(){
                     <a href="#">{plat.nomplat}</a><span>{plat.prixplat}</span>
                   </div>
                   <div className="menu-ingredients">
-                    {plat.descripplat || "Description non disponible"}
+                    {plat.descripplat || t('menu.defaultDescription')}
                   </div>
                 </div>
               ))

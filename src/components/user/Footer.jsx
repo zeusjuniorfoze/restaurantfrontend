@@ -1,6 +1,9 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
+
 
 function Footer (){
+  const { t } = useTranslation();
 
         return (
 
@@ -13,10 +16,10 @@ function Footer (){
                         <span className="sitename">RestaurantPS</span>
                       </a>
                       <div className="footer-contact pt-3">
-                        <p>gendamerie national</p>
-                        <p>Yaounde, Cameroun</p>
-                        <p className="mt-3"><strong>Phone:</strong> <span>+237 699 999 999</span></p>
-                        <p><strong>Email:</strong> <span>info@example.com</span></p>
+                        <p>{t('footer.contact.address')}</p>
+                        <p>{t('footer.contact.city')}</p>
+                        <p className="mt-3"><strong>{t('footer.contact.phone')}</strong> <span>+237 699 999 999</span></p>
+                        <p><strong>{t('footer.contact.email')}</strong> <span>info@example.com</span></p>
                       </div>
                       <div className="social-links d-flex mt-4">
                         <a href="#"><i className="bi bi-twitter-x"></i></a>
@@ -39,10 +42,10 @@ function Footer (){
                     </div>
 
                     <div className="col-lg-2 col-md-3 footer-links">
-                      <h4>Services</h4>
+                      <h4>{t('footer.services.title')}</h4>
                       <ul>
-                        <li><a href="#">Livraison</a></li>
-                        <li><a href="#">Service traiteur</a></li>
+                        <li><a href="#">{t('footer.services.delivery')}</a></li>
+                        <li><a href="#">{t('footer.services.catering')}</a></li>
                         
                       </ul>
                     </div>
@@ -51,10 +54,10 @@ function Footer (){
                 </div>
 
                 <div className="container copyright text-center mt-4">
-                  <p>© <span>Copyright</span> <strong className="px-1 sitename">powerk-soft</strong> <span>All Rights Reserved</span></p>
+                  <p><span>{t('footer.copyright.text')}</span> <strong className="px-1 sitename">powerk-soft</strong> <span>{t('footer.copyright.allRights')}</span></p>
                   <div className="credits">
                   
-                    Designed by <a href="https://bootstrapmade.com/">Powerk-soft</a>
+                  {t('footer.credits')} <a href="">Powerk-soft</a>
                   </div>
                 </div>
 

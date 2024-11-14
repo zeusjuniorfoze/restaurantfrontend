@@ -8,6 +8,8 @@ import FootAdmin from './FootAdmin';
 import menuService from "../../services/menuService";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Oval } from 'react-loader-spinner';
+import { useTranslation } from 'react-i18next';
+
 
 const Loader = ({ loading }) => (
     loading && (
@@ -29,6 +31,7 @@ const loaderStyle = {
 };
 
 function Menus() {
+    const { t } = useTranslation();
     const { userRole } = useSelector((state) => state.auth);
     const navigate = useNavigate();
 
@@ -251,8 +254,8 @@ function Menus() {
                     <h1>Menus</h1>
                     <nav>
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><Link to="/dashboard">Dashboard</Link></li>
-                            <li className="breadcrumb-item active">Menus</li>
+                            <li className="breadcrumb-item"><Link to="/dashboard">{t('dashboard')}</Link></li>
+                            <li className="breadcrumb-item active">{t('menus')}</li>
                         </ol>
                     </nav>
 
@@ -260,7 +263,7 @@ function Menus() {
                         <div className="row">
                             <div className="card">
                                 <div className="card-body">
-                                    <h5 className="card-title">Liste des Menus</h5>
+                                    <h5 className="card-title">{t('listmenus')}</h5>
 
                                     {message && <div className="alert alert-success">{message}</div>}
 
@@ -273,27 +276,27 @@ function Menus() {
                                                 onChange={handleTypePlatChange}
                                                 value={selectedTypePlat}
                                             >
-                                                <option value="">Sélectionnez un type de menu</option>
+                                                <option value="">{t('selectmenu')}</option>
                                                 {menus.data.length > 0 && 
                                                     menus.data.map(menu => (
                                                         <option value={menu._id} key={menu._id}>{menu.typeplat}</option>
                                                     ))
                                                 }
                                             </select>
-                                            <label htmlFor="floatingSelect">Type menus</label>
+                                            <label htmlFor="floatingSelect">{t('typemenus')}</label>
                                         </div>
                                         <button 
                                             className="btn btn-success me-3" 
                                             onClick={() => setShowAddTypePlatModal(true)}
                                         >
-                                            Ajouter menu
+                                            {t('ajoutmenu')}
                                         </button>
                                         {selectedTypePlat && (
                                             <button 
                                                 className="btn btn-warning" 
                                                 onClick={() => setShowEditTypePlatModal(true)}
                                             >
-                                                Modifier menu
+                                               {t('modifiermenu')}
                                             </button>
                                         )}
                                     </div>
@@ -303,7 +306,7 @@ function Menus() {
                                             <input 
                                                 type="text" 
                                                 className="form-control" 
-                                                placeholder="Rechercher un plat" 
+                                                placeholder={t('rechercheplat')}
                                                 value={searchTerm} 
                                                 onChange={(e) => setSearchTerm(e.target.value)} 
                                             />
@@ -314,11 +317,11 @@ function Menus() {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Nom</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Image</th>
-                                                <th scope="col">Prix</th>
-                                                <th scope="col">Actions</th> 
+                                                <th scope="col">{t('nameLabel')}</th>
+                                                <th scope="col">{t('description')}</th>
+                                                <th scope="col">{t('image')}</th>
+                                                <th scope="col">{t('price')}</th>
+                                                <th scope="col">{t('actions')}</th> 
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -327,7 +330,7 @@ function Menus() {
                                                     <tr key={platIndex}>
                                                         <th scope="row">{platIndex + 1}</th>
                                                         <td>{plat.nomplat}</td>
-                                                        <td>{plat.descripplat || "Description non disponible"}</td>
+                                                        <td>{plat.descripplat || t('menu.defaultDescription')}</td>
                                                         <td>
                                                             <img 
                                                                 src={plat.imageplat ? plat.imageplat : "assets/img/menu/default-image.jpg"} 
@@ -341,7 +344,7 @@ function Menus() {
                                                                 className="btn btn-primary me-2" 
                                                                 onClick={() => handleEditPlat(plat)}
                                                             >
-                                                                Éditer
+                                                                {t('editer')}
                                                             </button>
                                                             <button 
                                                                 className="btn btn-danger" 
@@ -351,7 +354,7 @@ function Menus() {
                                                                 {loadingDelete ? (
                                                                             <Loader loading={loadingDelete} /> // Affiche le Loader pendant la suppression
                                                                         ) : (
-                                                                            "Supprimer"
+                                                                            t('Supprimer')
                                                                         )}
                                                                 
                                                             </button>
@@ -360,7 +363,7 @@ function Menus() {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan="6" className="text-center">Aucun plat trouvé.</td>
+                                                    <td colSpan="6" className="text-center">{t('aucunplat')}</td>
                                                 </tr>
                                             )}
                                         </tbody>
@@ -374,7 +377,7 @@ function Menus() {
                                                     onClick={() => setShowAddModal(true)} 
                                                     disabled={selectedTypePlat === ''}
                                                 >
-                                                    Ajouter un plat
+                                                    {t('ajoutplat')}
                                                 </button>
                                                 
 
@@ -409,14 +412,14 @@ function Menus() {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Ajouter un menu</h5>
+                            <h5 className="modal-title">{t('modal.addMenuTitle')}</h5>
                             <button type="button" className="btn-close" onClick={() => setShowAddTypePlatModal(false)}
                                 
                                 ></button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
-                                <label className="form-label">Nom du menu</label>
+                                <label className="form-label">{t('form.menuName')}</label>
                                 <input 
                                     type="text" 
                                     className="form-control" 
@@ -430,10 +433,10 @@ function Menus() {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={() => setShowAddTypePlatModal(false)}
                                 disabled={loading}
-                                >Fermer</button>
+                                >{t('modal.close')}</button>
                             <button type="button" className="btn btn-success" onClick={handleAddMenus}
                             disabled={loading}
-                            >Ajouter</button>
+                            >{t('modal.add')}</button>
                         </div>
                     </div>
                 </div>
@@ -446,12 +449,12 @@ function Menus() {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Modifier le menus</h5>
+                            <h5 className="modal-title">{t('modal.editMenuTitle')}</h5>
                             <button type="button" className="btn-close" onClick={() => setShowEditTypePlatModal(false)}></button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
-                                <label className="form-label">nouveau Nom du menu</label>
+                                <label className="form-label">{t('form.newMenuName')}</label>
                                 <input 
                                     type="text" 
                                     className="form-control" 
@@ -465,10 +468,10 @@ function Menus() {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={() => setShowEditTypePlatModal(false)}
                                 disabled={loading}
-                                >Fermer</button>
+                                >{t('modal.close')}</button>
                             <button type="button" className="btn btn-warning" onClick={handleEditMenu}
                             disabled={loading}
-                            >Modifier</button>
+                            >{t('modal.edit')}</button>
                         </div>
                     </div>
                 </div>
@@ -481,12 +484,12 @@ function Menus() {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Modifier le Plat</h5>
+                            <h5 className="modal-title">{t('modal.editDishTitle')}</h5>
                             <button type="button" className="btn-close" onClick={() => setShowModal(false)} disabled={loading}></button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
-                                <label className="form-label">Nom du plat</label>
+                                <label className="form-label">{t('form.dishName')}</label>
                                 <input 
                                     type="text" 
                                     className="form-control" 
@@ -496,7 +499,7 @@ function Menus() {
                                 />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Description</label>
+                                <label className="form-label">{t('form.description')}</label>
                                 <textarea 
                                     className="form-control" 
                                     value={selectedPlat?.descripplat} 
@@ -505,7 +508,7 @@ function Menus() {
                                 ></textarea>
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Prix</label>
+                                <label className="form-label">{t('form.price')}</label>
                                 <input 
                                     type="number" 
                                     className="form-control" 
@@ -515,7 +518,7 @@ function Menus() {
                                 />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Image du plat</label>
+                                <label className="form-label">{t('form.dishImage')}</label>
                                 <input 
                                     type="file" 
                                     className="form-control" 
@@ -531,7 +534,7 @@ function Menus() {
                                 onClick={() => setShowModal(false)} 
                                 disabled={loading}
                             >
-                                Fermer
+                                {t('modal.close')}
                             </button>
                             <button 
                                 type="button" 
@@ -539,7 +542,7 @@ function Menus() {
                                 onClick={handleSaveChanges} 
                                 disabled={loading}
                             >
-                                Sauvegarder les modifications
+                                {t('modal.saveChanges')}
                             </button>
                         </div>
                     </div>
@@ -552,12 +555,12 @@ function Menus() {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Ajouter un Plat</h5>
+                            <h5 className="modal-title">{t('modal.addDishTitle')}</h5>
                             <button type="button" className="btn-close" onClick={() => setShowAddModal(false)}></button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
-                                <label className="form-label">Nom du plat</label>
+                                <label className="form-label">{t('form.dishName')}</label>
                                 <input 
                                     type="text"
                                     className="form-control" 
@@ -567,7 +570,7 @@ function Menus() {
                                 />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Description</label>
+                                <label className="form-label">{t('form.description')}</label>
                                 <textarea 
                                     className="form-control"
                                     value={newPlat.descripplat} 
@@ -576,7 +579,7 @@ function Menus() {
                                 ></textarea>
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Prix</label>
+                                <label className="form-label">{t('form.price')}</label>
                                 <input 
                                     type="number" 
                                     className="form-control" 
@@ -586,7 +589,7 @@ function Menus() {
                                 />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Image du plat</label>
+                                <label className="form-label">{t('form.dishImage')}</label>
                                 <input 
                                     type="file" 
                                     className="form-control" 
@@ -598,10 +601,10 @@ function Menus() {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}
                                 disabled={loading}
-                                >Fermer</button>
+                                >{t('modal.close')}</button>
                             <button type="button" className="btn btn-success" onClick={handleAddPlat}
                             disabled={loading}
-                            >Ajouter le plat</button>
+                            >{t('modal.addDish')}</button>
                         </div>
                     </div>
                 </div>

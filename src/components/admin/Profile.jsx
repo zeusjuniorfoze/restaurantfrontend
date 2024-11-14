@@ -6,6 +6,8 @@ import HeaderAdmin from './HeaderAdmin';
 import Aside from './Aside';
 import FootAdmin from './FootAdmin';
 import { Oval } from 'react-loader-spinner';
+import { useTranslation } from 'react-i18next';
+
 
 const Loader = ({ loading }) => (
     loading && (
@@ -27,6 +29,7 @@ const loaderStyle = {
 };
 
 function Profile() {
+    const { t } = useTranslation();
     const { userRole } = useSelector((state) => state.auth); 
     const navigate = useNavigate();
     
@@ -75,7 +78,7 @@ function Profile() {
         try {
             const response = await UsersService.updateProfile({ nomUser, emailUser, numeroUser });
             if (response.data.success) {
-                setProfileSuccessMessage("Profil mis à jour avec succès !");
+                setProfileSuccessMessage(t('profileUpdateSuccess'));
             }
         } catch (error) {
             console.error("Erreur lors de la mise à jour du profil:", error);
@@ -89,7 +92,7 @@ function Profile() {
         setError('');
         setPasswordSuccessMessage('');
         if (newPasswordUser !== verifiePasswordUser) {
-            setError("Les mots de passe ne correspondent pas.");
+            setError(t('passwordUpdateSuccess'));
             return;
         }
         
@@ -97,14 +100,14 @@ function Profile() {
         try {
             const response = await UsersService.changePassword({ passwordUser, newPasswordUser });
             if (response.data.success) {
-                setPasswordSuccessMessage("Mot de passe mis à jour avec succès !");
+                setPasswordSuccessMessage(t('passwordMismatchError'));
                 setPassword('');
                 setNewPassword('');
                 setVerifiNewPassword('');
             }
         } catch (error) {
-            console.error("Erreur lors de la mise à jour du mot de passe:", error);
-            setError("Erreur lors de la mise à jour du mot de passe");
+            
+            setError(t('passwordUpdateError'));
         } finally {
             setLoading(false);
         }
@@ -116,11 +119,11 @@ function Profile() {
             <Aside />
             <main id="mains" className="mains">
                 <div className="pagetitle">
-                    <h1>Réservations</h1>
+                    <h1>{t('profile')}</h1>
                     <nav>
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><Link to="/dashboard">Dashboard</Link></li>
-                            <li className="breadcrumb-item active">Profile</li>
+                            <li className="breadcrumb-item"><Link to="/dashboard">{t('dashboard')}</Link></li>
+                            <li className="breadcrumb-item active">{t('profile')}</li>
                         </ol>
                     </nav>
                 </div>
@@ -141,32 +144,32 @@ function Profile() {
                                 <div className="card-body pt-3">
                                     <ul className="nav nav-tabs nav-tabs-bordered">
                                         <li className="nav-item">
-                                            <button className="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Information</button>
+                                            <button className="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">{t('profileDetailsTitle')}</button>
                                         </li>
                                         <li className="nav-item">
-                                            <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Modifier Profile</button>
+                                            <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">{t('editProfileTab')}</button>
                                         </li>
                                         <li className="nav-item">
-                                            <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Changer le mot de passe</button>
+                                            <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">{t('changePasswordTab')}</button>
                                         </li>
                                     </ul>
                                     <div className="tab-content pt-2">
                                         <div className="tab-pane fade show active profile-overview" id="profile-overview">
-                                            <h5 className="card-title">Détails du Profil</h5>
+                                            
                                             <div className="row">
-                                                <div className="col-lg-3 col-md-4 label">Nom</div>
+                                                <div className="col-lg-3 col-md-4 label">{t('nameLabel')}</div>
                                                 <div className="col-lg-9 col-md-8">{nomUser}</div>
                                             </div>
                                             <div className="row">
-                                                <div className="col-lg-3 col-md-4 label">Role</div>
+                                                <div className="col-lg-3 col-md-4 label">{t('roleLabel')}</div>
                                                 <div className="col-lg-9 col-md-8">Administrateur</div>
                                             </div>
                                             <div className="row">
-                                                <div className="col-lg-3 col-md-4 label">Numero</div>
+                                                <div className="col-lg-3 col-md-4 label">{t('phoneLabel')}</div>
                                                 <div className="col-lg-9 col-md-8">{numeroUser}</div>
                                             </div>
                                             <div className="row">
-                                                <div className="col-lg-3 col-md-4 label">Email</div>
+                                                <div className="col-lg-3 col-md-4 label">{t('emailLabel')}</div>
                                                 <div className="col-lg-9 col-md-8">{emailUser}</div>
                                             </div>
                                         </div>
@@ -175,25 +178,25 @@ function Profile() {
                                             <form onSubmit={handleProfileSubmit}>
                                                 {profileSuccessMessage && <p style={{ color: 'green' }}>{profileSuccessMessage}</p>}
                                                 <div className="row mb-3">
-                                                    <label htmlFor="fullName" className="col-md-4 col-lg-3 col-form-label">Nom</label>
+                                                    <label htmlFor="fullName" className="col-md-4 col-lg-3 col-form-label">{t('nameLabel')}</label>
                                                     <div className="col-md-8 col-lg-9">
                                                         <input name="fullName" type="text" className="form-control" id="fullName" value={nomUser} onChange={(e) => setNom(e.target.value)} disabled={loading}/>
                                                     </div>
                                                 </div>
                                                 <div className="row mb-3">
-                                                    <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">Numero</label>
+                                                    <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">{t('phoneLabel')}</label>
                                                     <div className="col-md-8 col-lg-9">
                                                         <input name="phone" type="text" className="form-control" id="Phone" value={numeroUser} onChange={(e) => setNumero(e.target.value)} disabled={loading}/>
                                                     </div>
                                                 </div>
                                                 <div className="row mb-3">
-                                                    <label htmlFor="Email" className="col-md-4 col-lg-3 col-form-label">Email</label>
+                                                    <label htmlFor="Email" className="col-md-4 col-lg-3 col-form-label">{t('emailLabel')}</label>
                                                     <div className="col-md-8 col-lg-9">
                                                         <input name="email" type="email" className="form-control" id="Email" value={emailUser} onChange={(e) => setEmail(e.target.value)} disabled={loading}/>
                                                     </div>
                                                 </div>
                                                 <div className="text-center">
-                                                    <button type="submit" className="btn btn-primary" disabled={loading}>Enregistrer</button>
+                                                    <button type="submit" className="btn btn-primary" disabled={loading}>{t('saveButton')}</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -202,26 +205,26 @@ function Profile() {
                                             <form onSubmit={handleChangePassword}>
                                                 {passwordSuccessMessage && <p style={{ color: 'green' }}>{passwordSuccessMessage}</p>}
                                                 <div className="row mb-3">
-                                                    <label htmlFor="currentPassword" className="col-md-4 col-lg-3 col-form-label">Mot de passe actuel</label>
+                                                    <label htmlFor="currentPassword" className="col-md-4 col-lg-3 col-form-label">{t('currentPasswordLabel')}</label>
                                                     <div className="col-md-8 col-lg-9">
                                                         <input name="password" type="password" className="form-control" id="currentPassword" value={passwordUser} onChange={(e) => setPassword(e.target.value)} disabled={loading}/>
                                                     </div>
                                                 </div>
                                                 <div className="row mb-3">
-                                                    <label htmlFor="newPassword" className="col-md-4 col-lg-3 col-form-label">Nouveau mot de passe</label>
+                                                    <label htmlFor="newPassword" className="col-md-4 col-lg-3 col-form-label">{t('newPasswordLabel')}</label>
                                                     <div className="col-md-8 col-lg-9">
                                                         <input name="newpassword" type="password" className="form-control" id="newPassword" value={newPasswordUser} onChange={(e) => setNewPassword(e.target.value)} disabled={loading}/>
                                                     </div>
                                                 </div>
                                                 <div className="row mb-3">
-                                                    <label htmlFor="renewPassword" className="col-md-4 col-lg-3 col-form-label">Confirmer le mot de passe</label>
+                                                    <label htmlFor="renewPassword" className="col-md-4 col-lg-3 col-form-label">{t('renewPasswordLabel')}</label>
                                                     <div className="col-md-8 col-lg-9">
                                                         <input name="renewpassword" type="password" className="form-control" id="renewPassword" value={verifiePasswordUser} onChange={(e) => setVerifiNewPassword(e.target.value)} disabled={loading}/>
                                                     </div>
                                                 </div>
                                                 {error && <p style={{ color: 'red' }}>{error}</p>}
                                                 <div className="text-center">
-                                                    <button type="submit" className="btn btn-primary" disabled={loading}>Changer le mot de passe</button>
+                                                    <button type="submit" className="btn btn-primary" disabled={loading}>{t('changePasswordButton')}</button>
                                                 </div>
                                             </form>
                                         </div>

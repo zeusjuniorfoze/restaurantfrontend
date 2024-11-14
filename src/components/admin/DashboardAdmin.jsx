@@ -7,8 +7,11 @@ import Aside from './Aside';
 import FootAdmin from './FootAdmin';
 import menuService from "../../services/menuService";
 import reservationService from '../../services/reservationService';
+import { useTranslation } from 'react-i18next';
+
 
 function DashboardAdmin() {
+    const { t } = useTranslation();
     const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
     const navigate = useNavigate();
     
@@ -70,10 +73,10 @@ function DashboardAdmin() {
             <Aside />
             <main id="mains" className="mains">
                 <div className="pagetitle">
-                    <h1>Dashboard</h1>
+                    <h1>{t('dashboard')}</h1>
                     <nav>
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item active">Dashboard</li>
+                            <li className="breadcrumb-item active">{t('dashboard')}</li>
                         </ol>
                     </nav>
                 </div>
@@ -85,7 +88,7 @@ function DashboardAdmin() {
                                 <div className="col-xxl-4 col-md-6">
                                     <div className="card info-card sales-card">
                                         <div className="card-body">
-                                            <h5 className="card-title">Type menus</h5>
+                                            <h5 className="card-title">{t('typemenus')}</h5>
                                             <div className="d-flex align-items-center">
                                                 <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                     <i className="bi bi-cart"></i>
@@ -101,7 +104,7 @@ function DashboardAdmin() {
                                 <div className="col-xxl-4 col-md-6">
                                     <div className="card info-card revenue-card">
                                         <div className="card-body">
-                                            <h5 className="card-title">Plats</h5>
+                                            <h5 className="card-title">{t('plats')}</h5>
                                             <div className="d-flex align-items-center">
                                                 <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                     <i className="bi bi-people"></i>
@@ -117,7 +120,7 @@ function DashboardAdmin() {
                                 <div className="col-xxl-4 col-xl-12">
                                     <div className="card info-card customers-card">
                                         <div className="card-body">
-                                            <h5 className="card-title">Reservations</h5>
+                                            <h5 className="card-title">{t('reservations')}</h5>
                                             <div className="d-flex align-items-center">
                                                 <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                     <i className="bi bi-people"></i>

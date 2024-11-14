@@ -1,0 +1,190 @@
+{
+
+    "accueil" : "Acceuil",
+    "menus": "Menus",
+    "reserver_table": "Réserver une table",
+    "reservations": "Réservations",
+
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "signOut": "Déconnexion",
+    "typemenus" : "type menus",
+    "plats" : "Plats" ,
+    "listmenus": "Liste des Menus",
+    "selectmenu" : "Sélectionnez un type de menu",
+
+    "profileDetailsTitle": "Détails du Profil",
+    "nameLabel": "Nom",
+    "roleLabel": "Rôle",
+    "phoneLabel": "Numéro",
+    "emailLabel": "Email",
+    "editProfileTab": "Modifier Profil",
+    "changePasswordTab": "Changer le mot de passe",
+    "currentPasswordLabel": "Mot de passe actuel",
+    "newPasswordLabel": "Nouveau mot de passe",
+    "renewPasswordLabel": "Confirmer le mot de passe",
+    "saveButton": "Enregistrer",
+    "changePasswordButton": "Changer le mot de passe",
+    "profileUpdateSuccess": "Profil mis à jour avec succès !",
+    "passwordUpdateSuccess": "Mot de passe mis à jour avec succès !",
+    "passwordMismatchError": "Les mots de passe ne correspondent pas.",
+    "passwordUpdateError": "Erreur lors de la mise à jour du mot de passe",
+
+
+    "filterByStatus": "Filtrer par statut :",
+    "all": "Toutes",
+    "confirmed": "Confirmée",
+    "rejected": "Rejeté",
+    "clientName": "Nom client",
+    "clientNumber": "Numéro client",
+    "clientEmail": "Email client",
+    "reservationDate": "Date réservée",
+    "reservationTime": "Heure réservée",
+    "reservedSeats": "Places réservées",
+    "reservationReason": "Motif de la réservation",
+    "status": "Status",
+    "actions": "Actions",
+    "noReservationsFound": "Aucune réservation trouvée.",
+    "confirm": "Confirmer",
+    "reject": "Rejeter",
+    "reservationConfirmed": "Réservation confirmée",
+    "reservationRejected": "Réservation rejetée",
+    "errorConfirming": "Erreur lors de la confirmation de la réservation",
+    "errorRejecting": "Erreur lors du rejet de la réservation",
+
+    "ajoutmenu" : "Ajouter menu",
+    "modifiermenu" : "Modifier menu",
+    "rechercheplat" : "Rechercher un plat",
+    "ajoutplat" : "Ajouter un plat",
+    "description": "Description",
+    "image": "Image",
+    "price": "Prix",
+    "editer" : "Éditer",
+    "Supprimer" : "Supprimer",
+    "aucunplat" : "Aucun plat trouvé.",
+
+    "modal": {
+      "addMenuTitle": "Ajouter un menu",
+      "editMenuTitle": "Modifier le menu",
+      "editDishTitle": "Modifier le plat",
+      "addDishTitle": "Ajouter un plat",
+      "close": "Fermer",
+      "saveChanges": "Sauvegarder les modifications",
+      "add": "Ajouter",
+      "addDish": "Ajouter le plat",
+      "edit": "Modifier"
+  },
+
+  "form": {
+    "menuName": "Nom du menu",
+    "newMenuName": "Nouveau nom du menu",
+    "dishName": "Nom du plat",
+    "description": "Description",
+    "price": "Prix",
+    "dishImage": "Image du plat"
+  },
+    "hero": {
+    "welcome": "Bienvenue au ",
+    "slogan": "Donne du bon depuis 18 ans!"
+  },
+
+  "about": {
+    "title": "Nos Engagements pour Vous Satisfaire",
+    "intro": "Chez RestaurantPS, nous croyons que chaque repas doit être une expérience inoubliable. Nos chefs passionnés préparent des plats savoureux en utilisant uniquement des ingrédients frais et de saison, soigneusement sélectionnés pour vous offrir le meilleur. Que vous soyez amateur de cuisine traditionnelle ou en quête de nouvelles saveurs, notre menu varié saura ravir vos papilles.",
+    "commitments": {
+      "item1": "Ingrédients frais et locaux.",
+      "item2": "Une cuisine authentique et créative.",
+      "item3": "Réservation facile et commande en ligne."
+    },
+    "details": "Dans une ambiance conviviale et chaleureuse, nous mettons un point d'honneur à offrir un service attentionné et personnalisé, afin que chaque visite soit un véritable moment de plaisir. Que vous veniez en famille, entre amis ou pour un dîner romantique, notre équipe se fera un plaisir de vous accueillir."
+  },
+
+  "why_us": {
+    "title": "Votre choix",
+    "subtitle": "Pourquoi choisir notre restaurant ?",
+    "reasons": {
+      "reason1": {
+        "title": "L'expérience culinaire par excellence",
+        "description": "Chaque plat raconte une histoire. Nous allions avec soin des saveurs authentiques et des techniques modernes pour vous offrir une cuisine raffinée et créative."
+      },
+      "reason2": {
+        "title": "Des saveurs qui inspirent",
+        "description": "C’est opter pour une cuisine pleine de passion, de créativité et de respect des produits. Notre engagement est simple : vous offrir une carte composée de plats maison, préparés avec des ingrédients locaux et de première qualité."
+      },
+      "reason3": {
+        "title": "Une aventure gastronomique unique",
+        "description": "Parce que nous offrons bien plus qu'un repas, nous vous offrons une aventure gastronomique."
+      }
+    }
+  },
+
+  "gallery": {
+    "title": "Galerie",
+    "description": "Photos venant du Restaurant"
+  },
+
+  "footer": {
+    "contact": {
+      "address": "gendamerie nationale",
+      "city": "Yaounde, Cameroun",
+      "phone": "Téléphone :",
+      "email": "Email :"
+    },
+    "services": {
+      "title": "Services",
+      "delivery": "Livraison",
+      "catering": "Service traiteur"
+    },
+    "copyright": {
+      "text": "© Copyright",
+      "allRights": "Tous droits réservés"
+    },
+    "credits": "Conçu par"
+  },
+
+  "menu": {
+    "description": "Liste des plats",
+    "all": "Tous",
+    "defaultDescription": "Description non disponible"
+    
+  },
+  "reservation": {
+    "form": {
+        "placeholders": {
+            "name": "Entrer votre nom",
+            "email": "Entrer votre email",
+            "phone": "Entrer votre numéro de téléphone",
+            "date": "Date",
+            "time": "Sélectionner l'heure",
+            "people": "# Place",
+            "reason": "Motif"
+        },
+        "buttons": {
+            "submit": "Réserver une Table"
+        },
+        "messages": {
+            "loading": "Chargement",
+            "errorMessage": "Erreur lors de l'enregistrement de la réservation",
+            "successMessage": "Réservation enregistrée avec succès"
+        }
+        }
+    },
+
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Entrez votre email & mot de passe pour vous connecter", 
+      "placeholders": {
+        "email": "Email",
+        "password": "Mot de passe"
+      },
+      "loading": "Chargement...",
+      "messages": {
+        "success": "Connexion réussie, redirection vers le tableau de bord...",
+        "error": "Erreur de connexion : Vérifiez vos informations.", 
+        "loadingError":  "Erreur lors de la connexion" ,
+        "loadingTokenError": "Erreur de vérification du token"
+      },
+      "redirect": "Rentrez à l'accueil",
+      "footer": "Conçu par Powerks-soft"
+    }
+}

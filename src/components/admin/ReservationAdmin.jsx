@@ -7,8 +7,11 @@ import FootAdmin from './FootAdmin';
 import UsersService from '../../services/usersService';
 import reservationService from '../../services/reservationService';
 import { RingLoader } from 'react-spinners';
+import { useTranslation } from 'react-i18next';
+
 
 function ReservationAdmin() {
+    const { t } = useTranslation();
     const { userRole } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -54,7 +57,7 @@ function ReservationAdmin() {
             await reservationService.updateStatut(reservationId, { statutReservation: 'Confirmée' });
             fetchReservations();
         } catch (error) {
-            console.error("Erreur lors de la confirmation de la réservation :", error);
+            console.error(t('errorConfirming'), error);
         } finally {
             setLoadingAction(prev => ({ ...prev, [reservationId]: false }));
         }
@@ -66,7 +69,7 @@ function ReservationAdmin() {
             await reservationService.updateStatut(reservationId, { statutReservation: 'Rejeté' });
             fetchReservations();
         } catch (error) {
-            console.error("Erreur lors du rejet de la réservation :", error);
+            console.error(t('errorRejecting'), error);
         } finally {
             setLoadingAction(prev => ({ ...prev, [reservationId]: false }));
         }
@@ -91,11 +94,11 @@ function ReservationAdmin() {
             <Aside />
             <main id="mains" className="mains">
                 <div className="pagetitle">
-                    <h1>Réservations</h1>
+                    <h1>{t('reservations')}</h1>
                     <nav>
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><Link to="/dashboard">Dashboard</Link></li>
-                            <li className="breadcrumb-item active">Réservations</li>
+                            <li className="breadcrumb-item"><Link to="/dashboard">{t('accueil')}</Link></li>
+                            <li className="breadcrumb-item active">{t('reservations')}</li>
                         </ol>
                     </nav>
                 </div>
@@ -106,11 +109,11 @@ function ReservationAdmin() {
                             <div className="card-body">
                                 {/* Menu de filtre */}
                                 <div className="mb-3">
-                                    <label>Filtrer par statut :</label>
+                                    <label>{t('filterByStatus')}</label>
                                     <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-                                        <option value="Toutes">Toutes</option>
-                                        <option value="Confirmée">Confirmée</option>
-                                        <option value="Rejeté">Rejeté</option>
+                                        <option value="Toutes">{t('all')}</option>
+                                        <option value="Confirmée">{t('confirmed')}</option>
+                                        <option value="Rejeté">{t('rejected')}</option>
                                     </select>
                                 </div>
 
@@ -118,21 +121,21 @@ function ReservationAdmin() {
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Nom client</th>
-                                            <th scope="col">Numéro client</th>
-                                            <th scope="col">Email client</th>
-                                            <th scope="col">Date réservée</th>
-                                            <th scope="col">Heure réservée</th>
-                                            <th scope="col">Places réservées</th> 
-                                            <th scope="col">Motif de la réservation</th>
-                                            <th scope="col">Status</th> 
-                                            <th scope="col">Actions</th>
+                                            <th scope="col">{t('clientName')}</th>
+                                            <th scope="col">{t('clientNumber')}</th>
+                                            <th scope="col">{t('clientEmail')}</th>
+                                            <th scope="col">{t('reservationDate')}</th>
+                                            <th scope="col">{t('reservationTime')}</th>
+                                            <th scope="col">{t('reservedSeats')}</th> 
+                                            <th scope="col">{t('reservationReason')}</th>
+                                            <th scope="col">{t('status')}</th> 
+                                            <th scope="col">{t('actions')}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {loading ? (
                                             <tr>
-                                                <td colSpan="10" className="text-center">Chargement...</td>
+                                                <td colSpan="10" className="text-center">{t('loading')}</td>
                                             </tr>
                                         ) : filteredReservations.length > 0 ? (
                                             filteredReservations.map((reservation, index) => (
@@ -156,14 +159,14 @@ function ReservationAdmin() {
                                                                     onClick={() => handleConfirmReservation(reservation._id)}
                                                                     disabled={loadingAction[reservation._id]}
                                                                 >
-                                                                    {loadingAction[reservation._id] ? <RingLoader size={20} color="#ffffff" /> : 'Confirmer'}
+                                                                    {loadingAction[reservation._id] ? <RingLoader size={20} color="#ffffff" /> : t('confirm')}
                                                                 </button>
                                                                 <button 
                                                                     className="btn btn-danger"
                                                                     onClick={() => handleRejectReservation(reservation._id)}
                                                                     disabled={loadingAction[reservation._id]}
                                                                 >
-                                                                    {loadingAction[reservation._id] ? <RingLoader size={20} color="#ffffff" /> : 'Rejeter'}
+                                                                    {loadingAction[reservation._id] ? <RingLoader size={20} color="#ffffff" /> : t('reject')}
                                                                 </button>
                                                             </>
                                                         )}
@@ -172,7 +175,7 @@ function ReservationAdmin() {
                                             ))
                                         ) : (
                                             <tr>
-                                                <td colSpan="10" className="text-center">Aucune réservation trouvée.</td>
+                                                <td colSpan="10" className="text-center">{t('noReservationsFound')}</td>
                                             </tr>
                                         )}
                                     </tbody>
