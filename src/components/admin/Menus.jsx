@@ -314,67 +314,69 @@ function Menus() {
                                         )}
                                     </div>
 
-                                    <table className="table table-bordered table-responsive">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">{t('nameLabel')}</th>
-                                                <th scope="col">{t('description')}</th>
-                                                <th scope="col">{t('image')}</th>
-                                                <th scope="col">{t('price')}</th>
-                                                <th scope="col">{t('actions')}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {filteredPlats.length > 0 ? (
-                                                filteredPlats.map((plat, platIndex) => (
-                                                    <tr key={platIndex}>
-                                                        <th scope="row">{platIndex + 1}</th>
-                                                        <td>{plat.nomplat}</td>
-                                                        <td>{plat.descripplat || t('menu.defaultDescription')}</td>
-                                                        <td>
-                                                            <img
-                                                                src={plat.imageplat ? plat.imageplat : "assets/img/menu/default-image.jpg"}
-                                                                alt={plat.nomplat}
-                                                                style={{
-                                                                    width: '80px',
-                                                                    height: '80px',
-                                                                    objectFit: 'cover',
-                                                                }}
-                                                                className="img-fluid rounded"
-                                                            />
-                                                        </td>
-                                                        <td>{plat.prixplat}</td>
-                                                        <td>
-                                                            <button
-                                                                className="btn btn-primary btn-sm me-2"
-                                                                onClick={() => handleEditPlat(plat)}
-                                                            >
-                                                                {t('editer')}
-                                                            </button>
-                                                            <button
-                                                                className="btn btn-danger btn-sm"
-                                                                onClick={() =>
-                                                                    handleDeletePlat(selectedTypePlat, plat.nomplat)
-                                                                }
-                                                                disabled={loading}
-                                                            >
-                                                                {loadingDelete ? (
-                                                                    <Loader loading={loadingDelete} />
-                                                                ) : (
-                                                                    t('Supprimer')
-                                                                )}
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            ) : (
+                                    <div className="table-responsive">
+                                        <table className="table table-bordered">
+                                            <thead>
                                                 <tr>
-                                                    <td colSpan="6" className="text-center">{t('aucunplat')}</td>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">{t('nameLabel')}</th>
+                                                    <th scope="col">{t('description')}</th>
+                                                    <th scope="col">{t('image')}</th>
+                                                    <th scope="col">{t('price')}</th>
+                                                    <th scope="col">{t('actions')}</th>
                                                 </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                {filteredPlats.length > 0 ? (
+                                                    filteredPlats.map((plat, platIndex) => (
+                                                        <tr key={platIndex}>
+                                                            <th scope="row">{platIndex + 1}</th>
+                                                            <td>{plat.nomplat}</td>
+                                                            <td>{plat.descripplat || t('menu.defaultDescription')}</td>
+                                                            <td>
+                                                                <img
+                                                                    src={plat.imageplat ? plat.imageplat : "assets/img/menu/default-image.jpg"}
+                                                                    alt={plat.nomplat}
+                                                                    style={{
+                                                                        width: '80px',
+                                                                        height: '80px',
+                                                                        objectFit: 'cover',
+                                                                    }}
+                                                                    className="img-fluid rounded"
+                                                                />
+                                                            </td>
+                                                            <td>{plat.prixplat}</td>
+                                                            <td>
+                                                                <button
+                                                                    className="btn btn-primary btn-sm me-2"
+                                                                    onClick={() => handleEditPlat(plat)}
+                                                                >
+                                                                    {t('editer')}
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-danger btn-sm"
+                                                                    onClick={() =>
+                                                                        handleDeletePlat(selectedTypePlat, plat.nomplat)
+                                                                    }
+                                                                    disabled={loading}
+                                                                >
+                                                                    {loadingDelete ? (
+                                                                        <Loader loading={loadingDelete} />
+                                                                    ) : (
+                                                                        t('Supprimer')
+                                                                    )}
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="6" className="text-center">{t('aucunplat')}</td>
+                                                    </tr>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                     {selectedTypePlat && (
                                         <div className="mt-3">
@@ -400,6 +402,7 @@ function Menus() {
                             </div>
                         </div>
                     </section>
+
 
                 </div>
             </main>
