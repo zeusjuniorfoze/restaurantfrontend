@@ -1282,3 +1282,22 @@ a {
 .mobile-dropdown ul li a:hover {
   background-color: #f0f0f0;
 }
+
+@media (max-width: 768px) {
+  #arriereplan {
+      padding: 10px;
+  }
+
+  .table-responsive {
+      overflow-x: auto;
+  }
+
+  .btn {
+      font-size: 12px;
+      padding: 5px 10px;
+  }
+
+  .form-select {
+      font-size: 14px;
+  }
+}

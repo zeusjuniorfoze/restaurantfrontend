@@ -267,53 +267,54 @@ function Menus() {
 
                                     {message && <div className="alert alert-success">{message}</div>}
 
-                                    <div className="col-md-6 mb-3 d-flex align-items-center">
-                                        <div className="form-floating me-2">
-                                            <select 
-                                                className="form-select" 
-                                                id="floatingSelect" 
-                                                aria-label="State"
-                                                onChange={handleTypePlatChange}
-                                                value={selectedTypePlat}
+                                    <div className="row mb-3">
+                                        <div className="col-12 col-md-6 d-flex align-items-center">
+                                            <div className="form-floating me-2 flex-grow-1">
+                                                <select
+                                                    className="form-select"
+                                                    id="floatingSelect"
+                                                    aria-label="State"
+                                                    onChange={handleTypePlatChange}
+                                                    value={selectedTypePlat}
+                                                >
+                                                    <option value="">{t('selectmenu')}</option>
+                                                    {menus.data.length > 0 &&
+                                                        menus.data.map((menu) => (
+                                                            <option value={menu._id} key={menu._id}>{menu.typeplat}</option>
+                                                        ))}
+                                                </select>
+                                                <label htmlFor="floatingSelect">{t('typemenus')}</label>
+                                            </div>
+                                            <button
+                                                className="btn btn-success me-2"
+                                                onClick={() => setShowAddTypePlatModal(true)}
                                             >
-                                                <option value="">{t('selectmenu')}</option>
-                                                {menus.data.length > 0 && 
-                                                    menus.data.map(menu => (
-                                                        <option value={menu._id} key={menu._id}>{menu.typeplat}</option>
-                                                    ))
-                                                }
-                                            </select>
-                                            <label htmlFor="floatingSelect">{t('typemenus')}</label>
-                                        </div>
-                                        <button 
-                                            className="btn btn-success me-3" 
-                                            onClick={() => setShowAddTypePlatModal(true)}
-                                        >
-                                            {t('ajoutmenu')}
-                                        </button>
-                                        {selectedTypePlat && (
-                                            <button 
-                                                className="btn btn-warning" 
-                                                onClick={() => setShowEditTypePlatModal(true)}
-                                            >
-                                               {t('modifiermenu')}
+                                                {t('ajoutmenu')}
                                             </button>
+                                            {selectedTypePlat && (
+                                                <button
+                                                    className="btn btn-warning"
+                                                    onClick={() => setShowEditTypePlatModal(true)}
+                                                >
+                                                    {t('modifiermenu')}
+                                                </button>
+                                            )}
+                                        </div>
+
+                                        {selectedTypePlat && (
+                                            <div className="col-12 col-md-6 mt-3 mt-md-0">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder={t('rechercheplat')}
+                                                    value={searchTerm}
+                                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                                />
+                                            </div>
                                         )}
                                     </div>
 
-                                    {selectedTypePlat && (
-                                        <div className="col-md-4 mb-3">
-                                            <input 
-                                                type="text" 
-                                                className="form-control" 
-                                                placeholder={t('rechercheplat')}
-                                                value={searchTerm} 
-                                                onChange={(e) => setSearchTerm(e.target.value)} 
-                                            />
-                                        </div>
-                                    )}
-
-                                    <table className="table table-bordered">
+                                    <table className="table table-bordered table-responsive">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
@@ -321,7 +322,7 @@ function Menus() {
                                                 <th scope="col">{t('description')}</th>
                                                 <th scope="col">{t('image')}</th>
                                                 <th scope="col">{t('price')}</th>
-                                                <th scope="col">{t('actions')}</th> 
+                                                <th scope="col">{t('actions')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -332,31 +333,37 @@ function Menus() {
                                                         <td>{plat.nomplat}</td>
                                                         <td>{plat.descripplat || t('menu.defaultDescription')}</td>
                                                         <td>
-                                                            <img 
-                                                                src={plat.imageplat ? plat.imageplat : "assets/img/menu/default-image.jpg"} 
-                                                                alt={plat.nomplat} 
-                                                                style={{ width: '100px', height: '100px', objectFit: 'cover' }} 
+                                                            <img
+                                                                src={plat.imageplat ? plat.imageplat : "assets/img/menu/default-image.jpg"}
+                                                                alt={plat.nomplat}
+                                                                style={{
+                                                                    width: '80px',
+                                                                    height: '80px',
+                                                                    objectFit: 'cover',
+                                                                }}
+                                                                className="img-fluid rounded"
                                                             />
                                                         </td>
                                                         <td>{plat.prixplat}</td>
                                                         <td>
-                                                            <button 
-                                                                className="btn btn-primary me-2" 
+                                                            <button
+                                                                className="btn btn-primary btn-sm me-2"
                                                                 onClick={() => handleEditPlat(plat)}
                                                             >
                                                                 {t('editer')}
                                                             </button>
-                                                            <button 
-                                                                className="btn btn-danger" 
-                                                                onClick={() => handleDeletePlat(selectedTypePlat, plat.nomplat)}
+                                                            <button
+                                                                className="btn btn-danger btn-sm"
+                                                                onClick={() =>
+                                                                    handleDeletePlat(selectedTypePlat, plat.nomplat)
+                                                                }
                                                                 disabled={loading}
                                                             >
                                                                 {loadingDelete ? (
-                                                                            <Loader loading={loadingDelete} /> // Affiche le Loader pendant la suppression
-                                                                        ) : (
-                                                                            t('Supprimer')
-                                                                        )}
-                                                                
+                                                                    <Loader loading={loadingDelete} />
+                                                                ) : (
+                                                                    t('Supprimer')
+                                                                )}
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -370,38 +377,30 @@ function Menus() {
                                     </table>
 
                                     {selectedTypePlat && (
-                                        <div className="col-md-4">
-                                            {selectedTypePlat && (
-                                                <button 
-                                                    className="btn btn-success me-2" 
-                                                    onClick={() => setShowAddModal(true)} 
-                                                    disabled={selectedTypePlat === ''}
-                                                >
-                                                    {t('ajoutplat')}
-                                                </button>
-                                                
-
-                                            )}
-                                            <button 
-                                                className="btn btn-danger" 
+                                        <div className="mt-3">
+                                            <button
+                                                className="btn btn-success me-2"
+                                                onClick={() => setShowAddModal(true)}
+                                            >
+                                                {t('ajoutplat')}
+                                            </button>
+                                            <button
+                                                className="btn btn-danger"
                                                 onClick={handleDeleteTypePlat}
-                                                disabled={selectedTypePlat === ''}
-                                                
                                             >
                                                 {loadingDelete ? (
-                                                    <Loader loading={loadingDelete} /> // Affiche le Loader pendant la suppression
-                                                    ) : (
-                                                           "Supprimer ce menu"
-                                                        )}
-                                              
+                                                    <Loader loading={loadingDelete} />
+                                                ) : (
+                                                    "Supprimer ce menu"
+                                                )}
                                             </button>
                                         </div>
                                     )}
-
                                 </div>
                             </div>
                         </div>
                     </section>
+
                 </div>
             </main>
             <FootAdmin />

@@ -103,87 +103,112 @@ function ReservationAdmin() {
                     </nav>
                 </div>
 
-                <section className="section" id="arriereplan" >
-                    <div className="row">
-                        <div className="card">
-                            <div className="card-body">
-                                {/* Menu de filtre */}
-                                <div className="mb-3">
-                                    <label>{t('filterByStatus')}</label>
-                                    <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-                                        <option value="Toutes">{t('all')}</option>
-                                        <option value="Confirmée">{t('confirmed')}</option>
-                                        <option value="Rejeté">{t('rejected')}</option>
-                                    </select>
-                                </div>
+                <section className="section" id="arriereplan">
+    <div className="container-fluid">
+        <div className="row">
+            <div className="col-12">
+                <div className="card">
+                    <div className="card-body">
+                        {/* Menu de filtre */}
+                        <div className="mb-3">
+                            <label className="form-label">{t('filterByStatus')}</label>
+                            <select
+                                className="form-select"
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}
+                            >
+                                <option value="Toutes">{t('all')}</option>
+                                <option value="Confirmée">{t('confirmed')}</option>
+                                <option value="Rejeté">{t('rejected')}</option>
+                            </select>
+                        </div>
 
-                                <table className="table table-bordered">
-                                    <thead>
+                        {/* Tableau responsive */}
+                        <div className="table-responsive">
+                            <table className="table table-bordered table-striped">
+                                <thead className="table-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">{t('clientName')}</th>
+                                        <th scope="col">{t('clientNumber')}</th>
+                                        <th scope="col">{t('clientEmail')}</th>
+                                        <th scope="col">{t('reservationDate')}</th>
+                                        <th scope="col">{t('reservationTime')}</th>
+                                        <th scope="col">{t('reservedSeats')}</th>
+                                        <th scope="col">{t('reservationReason')}</th>
+                                        <th scope="col">{t('status')}</th>
+                                        <th scope="col">{t('actions')}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loading ? (
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">{t('clientName')}</th>
-                                            <th scope="col">{t('clientNumber')}</th>
-                                            <th scope="col">{t('clientEmail')}</th>
-                                            <th scope="col">{t('reservationDate')}</th>
-                                            <th scope="col">{t('reservationTime')}</th>
-                                            <th scope="col">{t('reservedSeats')}</th> 
-                                            <th scope="col">{t('reservationReason')}</th>
-                                            <th scope="col">{t('status')}</th> 
-                                            <th scope="col">{t('actions')}</th>
+                                            <td colSpan="10" className="text-center">{t('loading')}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {loading ? (
-                                            <tr>
-                                                <td colSpan="10" className="text-center">{t('loading')}</td>
+                                    ) : filteredReservations.length > 0 ? (
+                                        filteredReservations.map((reservation, index) => (
+                                            <tr key={reservation._id}>
+                                                <th scope="row">{index + 1}</th>
+                                                <td>{reservation.nomClient}</td>
+                                                <td>{reservation.numeroClient}</td>
+                                                <td>{reservation.emailClient}</td>
+                                                <td>{reservation.dateReservation}</td>
+                                                <td>{reservation.heureReservation}</td>
+                                                <td>{reservation.nombrePlace}</td>
+                                                <td>{reservation.motifReservation}</td>
+                                                <td>{reservation.statutReservation}</td>
+                                                <td>
+                                                    {reservation.statutReservation === 'Confirmée' ||
+                                                    reservation.statutReservation === 'Rejeté' ? (
+                                                        <span className="text-success">
+                                                            {reservation.statutReservation}
+                                                        </span>
+                                                    ) : (
+                                                        <>
+                                                            <button
+                                                                className="btn btn-primary btn-sm me-2"
+                                                                onClick={() => handleConfirmReservation(reservation._id)}
+                                                                disabled={loadingAction[reservation._id]}
+                                                            >
+                                                                {loadingAction[reservation._id] ? (
+                                                                    <RingLoader size={20} color="#ffffff" />
+                                                                ) : (
+                                                                    t('confirm')
+                                                                )}
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-danger btn-sm"
+                                                                onClick={() => handleRejectReservation(reservation._id)}
+                                                                disabled={loadingAction[reservation._id]}
+                                                            >
+                                                                {loadingAction[reservation._id] ? (
+                                                                    <RingLoader size={20} color="#ffffff" />
+                                                                ) : (
+                                                                    t('reject')
+                                                                )}
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </td>
                                             </tr>
-                                        ) : filteredReservations.length > 0 ? (
-                                            filteredReservations.map((reservation, index) => (
-                                                <tr key={reservation._id}>
-                                                    <th scope="row">{index + 1}</th>
-                                                    <td>{reservation.nomClient}</td>
-                                                    <td>{reservation.numeroClient}</td>
-                                                    <td>{reservation.emailClient}</td>
-                                                    <td>{reservation.dateReservation}</td>
-                                                    <td>{reservation.heureReservation}</td>
-                                                    <td>{reservation.nombrePlace}</td>
-                                                    <td>{reservation.motifReservation}</td>
-                                                    <td>{reservation.statutReservation}</td>
-                                                    <td>
-                                                        {reservation.statutReservation === 'Confirmée' || reservation.statutReservation === 'Rejeté' ? (
-                                                            <span className="text-success">{reservation.statutReservation}</span>
-                                                        ) : (
-                                                            <>
-                                                                <button 
-                                                                    className="btn btn-primary me-2"
-                                                                    onClick={() => handleConfirmReservation(reservation._id)}
-                                                                    disabled={loadingAction[reservation._id]}
-                                                                >
-                                                                    {loadingAction[reservation._id] ? <RingLoader size={20} color="#ffffff" /> : t('confirm')}
-                                                                </button>
-                                                                <button 
-                                                                    className="btn btn-danger"
-                                                                    onClick={() => handleRejectReservation(reservation._id)}
-                                                                    disabled={loadingAction[reservation._id]}
-                                                                >
-                                                                    {loadingAction[reservation._id] ? <RingLoader size={20} color="#ffffff" /> : t('reject')}
-                                                                </button>
-                                                            </>
-                                                        )}
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td colSpan="10" className="text-center">{t('noReservationsFound')}</td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="10" className="text-center">
+                                                {t('noReservationsFound')}
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
             </main>
             <FootAdmin />
         </>
