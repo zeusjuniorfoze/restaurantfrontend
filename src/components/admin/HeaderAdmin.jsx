@@ -1,71 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import usersService from '../../services/usersService';
 
-
-function HeaderAdmin(){
-
+function HeaderAdmin() {
   const [nomuser, setNom] = useState('');
-  const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
-    const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // État pour la liste déroulante
+  const { userRole } = useSelector((state) => state.auth); // Rôle utilisateur récupéré depuis Redux
+  const navigate = useNavigate();
 
+  // Vérification du token et récupération de l'utilisateur
   useEffect(() => {
-    const checkToken = async () => {
-        try {
-            const response = await usersService.verifyToken();
-            if (!response.valid) { 
-                navigate('/login');
-            }
-        } catch (error) {
-            console.error("Erreur de vérification du token", error);
-            navigate('/login');
+    const initialize = async () => {
+      try {
+        const tokenResponse = await usersService.verifyToken();
+        if (!tokenResponse.valid) {
+          navigate('/login');
+          return;
         }
+
+        const userResponse = await usersService.getLogin();
+        setNom(userResponse.data.data.nomUser || 'Utilisateur');
+      } catch (error) {
+        console.error('Erreur lors de la vérification ou récupération des données:', error);
+        navigate('/login');
+      }
     };
 
-    checkToken();
-    fetchUser();
-   
-}, []);
+    initialize();
+  }, [navigate]);
 
-  const fetchUser = async () => {
-        
-    try {
-        const response = await usersService.getLogin();
+  // Gestion de l'ouverture/fermeture de la liste déroulante
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
 
-       setNom(response.data.data.nomUser)
-    } catch (error) {
-        console.error("Erreur lors de la récupération des menus:", error);
-    } 
-};
+  return (
+    <header id="headers" className="headers fixed-top d-flex align-items-center">
+      {/* Logo */}
+      <div className="d-flex align-items-center justify-content-between">
+        <Link to="/dashboard" className="logo d-flex align-items-center">
+          <img src="assetsDashboard/img/logo.png" alt="Logo" />
+          <span className="d-none d-lg-block">RestaurantAdmin</span>
+        </Link>
+        <button 
+          className="bi bi-list toggle-sidebar-btn d-lg-none" 
+          onClick={toggleDropdown} 
+          aria-label="Toggle navigation"
+        ></button>
+      </div>
 
-    return(
-
-        <header id="headers" className="headers fixed-top d-flex align-items-center">
-
-        <div className="d-flex align-items-center justify-content-between">
-          <a href="/dashboard" className="logo d-flex align-items-center">
-            <img src="assetsDashboard/img/logo.png" alt="" />
-            <span className="d-none d-lg-block">RestaurantAdmin</span>
-          </a>
-          <i className="bi bi-list toggle-sidebar-btn"></i>
-        </div>
-    
-       
-    
-        <nav className="headers-nav ms-auto">
-          <div className="d-flex align-items-center">
-  
-          <span >{nomuser}</span>
-          
-    
-          </div>
+      {/* Liste déroulante pour navigation mobile */}
+      {isDropdownOpen && (
+        <nav className="mobile-dropdown d-lg-none">
+          <ul>
+            <li><Link to="/dashboard">Dashboard</Link></li>
+            <li><Link to="/dashboardmenus">Menus</Link></li>
+            <li><Link to="/dashboardreservation">Réservations</Link></li>
+            <li><Link to="/dashboardprofile">Profil</Link></li>
+            <li><Link to="/logout">Déconnexion</Link></li>
+          </ul>
         </nav>
-    
-      </header>
+      )}
 
-    );
-
+      {/* Navigation utilisateur (desktop) */}
+      <nav className="headers-nav ms-auto d-none d-lg-flex">
+        <div className="d-flex align-items-center">
+          <span>{nomuser}</span>
+        </div>
+      </nav>
+    </header>
+  );
 }
 
 export default HeaderAdmin;

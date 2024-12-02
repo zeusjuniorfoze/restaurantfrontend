@@ -1,15 +1,34 @@
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import UsersService from '../../services/usersService';
 import { useTranslation } from 'react-i18next';
 
 function Aside() {
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const { t, i18n } = useTranslation(); // On récupère i18n pour changer la langue
   const { userRole } = useSelector((state) => state.auth);  // On récupère le rôle utilisateur du state
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(prev => !prev);
+  };
+
+  // Ajoute ou retire la classe du body en fonction de l'état du menu
+  useEffect(() => {
+    if (isMobileNavOpen) {
+      document.body.classList.add('mobile-nav-active');
+    } else {
+      document.body.classList.remove('mobile-nav-active');
+    }
+    
+    // Cleanup : retire la classe lorsque le composant est démonté
+    return () => {
+      document.body.classList.remove('mobile-nav-active');
+    };
+  }, [isMobileNavOpen]);
 
   useEffect(() => {
     const checkToken = async () => {

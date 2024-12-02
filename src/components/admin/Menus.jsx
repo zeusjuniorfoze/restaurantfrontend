@@ -419,15 +419,19 @@ function Menus() {
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
-                                <label className="form-label">{t('form.menuName')}</label>
+                                <label className="form-label">{t('form.menuName')} </label>
                                 <input 
                                     type="text" 
                                     className="form-control" 
                                     id="typeplat"
                                     value={newTypePlat} 
-                                    onChange={(e) => setNewTypePlat(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/\s+/g, '');
+                                        setNewTypePlat(value);
+                                    }}
                                     disabled={loading} 
                                 />
+
                             </div>
                         </div>
                         <div className="modal-footer">
